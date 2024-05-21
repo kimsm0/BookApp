@@ -12,9 +12,10 @@ import ArchitectureModule
 import Extensions
 
 
+
 // MARK: Router에서 구현해야할 프로토콜
 protocol BookSearchRouting: Routing {
-    
+    func attachBookDetail(id: String)
 }
 
 class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllable> {
@@ -28,7 +29,9 @@ class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllabl
 }
 
 extension BookSearchRouter: BookSearchRouting {
-    
+    func attachBookDetail(id: String) {
+        
+    }
 }
 
 

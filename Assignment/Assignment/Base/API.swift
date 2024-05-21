@@ -2,7 +2,7 @@
 //  File.swift
 //  newsApp
 //
-//  Created by kimsoomin_mac2022 on 4/27/24.
+//  Created by kimsoomin_mac2022 on 5/21/24.
 //
 
 import Foundation

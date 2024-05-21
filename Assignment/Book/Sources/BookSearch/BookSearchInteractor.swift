@@ -6,7 +6,7 @@
  @update history
  -
  */
-import Foundation
+import UIKit
 import Combine
 import ArchitectureModule
 import BookDataModel
@@ -14,8 +14,11 @@ import BookRepository
 
 // MARK: Interactor에서 구현해야할 프로토콜
 // Presenter -> Interactor
-protocol BookSearchInteractableForPresenter {
+protocol BookSearchInteractableForPresenter: AnyObject {
     func searchBooks(_ query: String)
+    func didSelected(book: BookEntity)
+    func loadMore()
+    func loadImage(url: String) -> AnyPublisher<(UIImage?, String), Never>
 }
 
 // 현재리블렛 -> 상위리블렛의 Interactor
@@ -34,7 +37,7 @@ protocol BookSearchInteractable: Interactable {
 
 //Interactor에서 필요한 Dependency
 protocol BookSearchInteractorDependency {
-    var bookRepository: BookRepositoryType { get }
+    var bookRepository: BookRepositoryType { get }    
     var mainQueue: DispatchQueue { get }
 }
 
@@ -47,6 +50,10 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
     
     private var query: String?
     private var curPage: Int = 1
+    
+    private var bookTotalEntity: BookTotalEntity? {
+        dependency.bookRepository.bookList.value
+    }
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -62,14 +69,12 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
         bind()
     }
     
-    func bind(){
-        self.presenter.showAlert(message: "")
-        
+    func bind(){        
         dependency.bookRepository.bookList
             .receive(on: dependency.mainQueue)
             .dropFirst()
             .sink {[weak self] total in
-                //self?.presenter.update(with: total.data.items, needToScrollToTop: self?.curPage == 1)
+                self?.presenter.update(total.books, needToScrollToTop: self?.curPage == 1 )
             }.store(in: &subscriptions)
         
         dependency.bookRepository.resultError
@@ -84,8 +89,30 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
 
 extension BookSearchInteractor: BookSearchInteractableForPresenter {
     func searchBooks(_ query: String){
-        // TODO: query emtpy
-        dependency.bookRepository.searchBooks(curPage: curPage, query: query)
+        self.query = query
+        if !query.isEmpty {
+            dependency.bookRepository.searchBooks(curPage: curPage, query: query)
+        }else {
+            self.presenter.showAlert(message: "검색어를 입력해주세요.")
+        }        
+    }
+    
+    func loadMore() {
+        if let bookTotalEntity, 
+            bookTotalEntity.total > bookTotalEntity.books.count,
+            let query
+        {
+            curPage += 1
+            searchBooks(query)
+        }
+    }
+    
+    func didSelected(book: BookEntity) {
+        self.router?.attachBookDetail(id: book.isbn13)
+    }
+    
+    func loadImage(url: String) -> AnyPublisher<(UIImage?, String), Never> {
+        return dependency.bookRepository.loadImage(url: url)
     }
 }
 

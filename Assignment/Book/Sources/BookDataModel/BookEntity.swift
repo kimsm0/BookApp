@@ -12,12 +12,12 @@ import Foundation
 
 // MARK: - Total
 public struct BookTotalEntity: Codable {
-    public let total: String
-    public let page: String
+    public let total: Int
+    public let page: Int
     public var books: [BookEntity]
     
-    public init(total: String,
-                page: String,
+    public init(total: Int,
+                page: Int,
                 books: [BookEntity]
     ) {
         self.total = total
@@ -29,21 +29,21 @@ public struct BookTotalEntity: Codable {
 
 public struct BookEntity: Codable {
     public let title: String
-    public let subTitle: String
+    public let subtitle: String
     public let isbn13: String
     public let price: String
     public let image: String
     public let url: String
     
     public init(title: String,
-                subTitle: String,
+                subtitle: String,
                 isbn13: String,
                 price: String,
                 image: String,
                 url: String
     ) {
         self.title = title
-        self.subTitle = subTitle
+        self.subtitle = subtitle
         self.isbn13 = isbn13
         self.price = price
         self.image = image

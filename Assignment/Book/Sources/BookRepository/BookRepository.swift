@@ -7,13 +7,14 @@
  @update history
  -
  */
-import Foundation
+import UIKit
 import Combine
 import Utils
 import Network
 import BookDataModel
 import Common
 import CustomUI
+import Storage
 
 public protocol BookRepositoryType {
     var baseURLString: String { get }
@@ -21,6 +22,7 @@ public protocol BookRepositoryType {
     var resultError: ReadOnlyCurrentValuePublisher<NetworkError?> { get }
     func searchBooks(curPage: Int, query: String)
     func getBookDetail(id: String) -> AnyPublisher<BookDetailEntity, NetworkError>
+    func loadImage(url: String) -> AnyPublisher<(UIImage?, String), Never>
 }
 
 public final class BookRepository: BookRepositoryType {
@@ -29,8 +31,8 @@ public final class BookRepository: BookRepositoryType {
         bookListSubject
     }
     
-    private let bookListSubject = CurrentValuePublisher<BookTotalEntity>(.init(total: "",
-                                                                               page: "",
+    private let bookListSubject = CurrentValuePublisher<BookTotalEntity>(.init(total: 0,
+                                                                               page: 0,
                                                                                books: []))
     public var resultError: ReadOnlyCurrentValuePublisher<NetworkError?> {
         resultErrorSubject
@@ -40,21 +42,26 @@ public final class BookRepository: BookRepositoryType {
         
     private let network: Network
     private let baseURL: URL
+    private let imageCacheService: ImageCacheServiceType
         
     public var baseURLString: String {
         baseURL.absoluteString
     }
     private var subscriptions: Set<AnyCancellable>
-    public init(network: Network, baseURL: URL){
+    public init(network: Network, 
+                baseURL: URL,
+                imageCacheServie: ImageCacheServiceType
+    ){
         self.subscriptions = .init()
         self.network = network
         self.baseURL = baseURL
+        self.imageCacheService = imageCacheServie
     }
 }
 
 public extension BookRepository {
     
-    func searchBooks(curPage: Int, query: String) {
+    func searchBooks(curPage: Int, query: String) {                
         LoadingView.showLoading()
         
         let request = BookSearhRequest(baseURL: baseURL, curPage: curPage, query: query)
@@ -111,5 +118,10 @@ public extension BookRepository {
                 LoadingView.hideLoading()
             })
             .eraseToAnyPublisher()
+    }
+    
+    func loadImage(url: String) -> AnyPublisher<(UIImage?,String), Never> {
+        imageCacheService.image(for: url)
+            .eraseToAnyPublisher()            
     }
 }

@@ -27,8 +27,10 @@ let package = Package(
                 .product(name: "ArchitectureModule", package: "Platform"),
                 .product(name: "Extensions", package: "Platform"),
                 .product(name: "CustomUI", package: "Platform"),
+                .product(name: "Storage", package: "Platform"),
                 "BookRepository",
-                "BookDataModel"
+                "BookDataModel",
+            
             ]
         ),
         .target(

@@ -29,7 +29,10 @@ final class AppRootDependencyBox: DependencyBox<AppRootDependency>, BookSearchDe
         let config = URLSessionConfiguration.default
         let network = NetworkImp(session: URLSession(configuration: config))
         
-        self.bookRepository = BookRepository(network: network, baseURL: URL(string: API().baseURL)!)
+        self.bookRepository = BookRepository(network: network, 
+                                             baseURL: URL(string: API().baseURL)!,
+                                             imageCacheServie: ImageCacheService()
+        )
         super.init(dependency: dependency)
     }
 }

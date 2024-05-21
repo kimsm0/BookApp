@@ -25,8 +25,8 @@ public struct BookTotalDTO: Codable {
     }
     
     public func toEntity() -> BookTotalEntity {        
-        .init(total: self.total,
-              page: self.page,
+        .init(total: Int(self.total) ?? 0,
+              page: Int(self.page) ?? 0,
               books: self.books.map{ $0.toEntity() })
     }
 }
@@ -34,21 +34,21 @@ public struct BookTotalDTO: Codable {
 
 public struct BookDTO: Codable {
     public let title: String
-    public let subTitle: String
+    public let subtitle: String
     public let isbn13: String
     public let price: String
     public let image: String
     public let url: String
     
     public init(title: String,
-                subTitle: String,
+                subtitle: String,
                 isbn13: String,
                 price: String,
                 image: String,
                 url: String
     ){
         self.title = title
-        self.subTitle = subTitle
+        self.subtitle = subtitle
         self.isbn13 = isbn13
         self.price = price
         self.image = image
@@ -57,7 +57,7 @@ public struct BookDTO: Codable {
     
     public func toEntity() -> BookEntity {
         .init(title: self.title,
-              subTitle: self.subTitle,
+              subtitle: self.subtitle,
               isbn13: self.isbn13,
               price: self.price,
               image: self.image,
