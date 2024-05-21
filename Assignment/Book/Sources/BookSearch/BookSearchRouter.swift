@@ -17,14 +17,14 @@ protocol BookSearchRouting: Routing {
     
 }
 
-class BookSearchRouter: Router<BookSearchInteractable, BookSearchPresentable> {
+class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllable> {
     
     override init(interactor: BookSearchInteractable,
-         presenter: BookSearchPresentable
+                  viewController: BookSearchViewControllable
     ) {
-        super.init(interactor: interactor, presenter: presenter)
+        super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
-    }
+    }    
 }
 
 extension BookSearchRouter: BookSearchRouting {

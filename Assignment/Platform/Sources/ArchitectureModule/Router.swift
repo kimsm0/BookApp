@@ -16,7 +16,7 @@
 import Extensions
 
 public protocol Routing: AnyObject {
-    var presenter:  ViewControllable { get set }
+    var viewController:  ViewControllable { get set }
     var interactor:  Interactable { get set }
     var childrens: [Routing] { get }
     
@@ -26,27 +26,27 @@ public protocol Routing: AnyObject {
 
 open class Router<InteractorType, PresenterType>: Routing {
     public var interactor:  Interactable
-    public var presenter:  ViewControllable
+    public var viewController:  ViewControllable
         
     public var interactable:  InteractorType
-    public var presentable:  PresenterType
+    public var viewControllerable:  PresenterType
         
     public var childrens: [Routing] = []
     
     public init(interactor: InteractorType,
-                presenter: PresenterType
+                viewController: PresenterType
     ){
         self.interactable = interactor
-        self.presentable = presenter
+        self.viewControllerable = viewController
         
         guard let interactor = interactor as? Interactable,
-            let presenter = presenter as? ViewControllable
+            let viewController = viewControllerable as? ViewControllable
               
         else {
             fatalError("error")
         }
         self.interactor = interactor
-        self.presenter = presenter
+        self.viewController = viewController
     }
     
     public func attach(child: Routing){

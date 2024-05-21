@@ -17,7 +17,7 @@ public protocol Interactable: AnyObject {
 
 open class Interactor<PresenterType>: Interactable {
         
-    let presenter: PresenterType
+    public let presenter: PresenterType
 
     public init(presenter: PresenterType) {
         self.presenter = presenter

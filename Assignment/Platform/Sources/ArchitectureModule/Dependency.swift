@@ -13,7 +13,7 @@ public protocol EmptyDependency: Dependency {}
 
 open class DependencyBox<DependencyType>: Dependency {
 
-    let dependency: DependencyType
+    public let dependency: DependencyType
     
     public init(dependency: DependencyType) {
         self.dependency = dependency

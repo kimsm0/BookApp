@@ -18,7 +18,8 @@ public enum Constant {}
 
 public extension Constant {
     struct APIPath{
-        
+        public static let bookSearch = "search"
+        public static let bookDetail = "books"
     }
     
     static let commonHeader = ["Content-Type": "application/json",

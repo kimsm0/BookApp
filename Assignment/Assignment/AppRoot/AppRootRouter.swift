@@ -17,20 +17,20 @@ protocol AppRootRouting: Routing {
     func attachBookSearch()
 }
 
-class AppRootRouter: Router<AppRootInteractable, AppRootPresentable> {
+class AppRootRouter: Router<AppRootInteractable, AppRootViewControllable> {
     
     private var bookSearchBuildable: BookSearchBuildable
     private var bookSearchRouting: Routing?
     
     init(interactor: AppRootInteractable,
-                  presenter: AppRootPresentable,
-                  bookSearchBuildable: BookSearchBuildable
-                  
+         viewController: AppRootViewControllable,
+         bookSearchBuildable: BookSearchBuildable
+         
     ) {
         self.bookSearchBuildable = bookSearchBuildable
-        super.init(interactor: interactor, presenter: presenter)
+        super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
-    }
+    }    
 }
 
 extension AppRootRouter: AppRootRouting {
@@ -39,7 +39,7 @@ extension AppRootRouter: AppRootRouting {
             let router = bookSearchBuildable.build(parentInteractor: interactable)
             bookSearchRouting = router
             attach(child: router)
-            presentable.setViewController(vc: router.presenter)
+            viewControllerable.setViewController(vc: router.viewController)
         }
     }
 }

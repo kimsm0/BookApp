@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootRouter = AppRootBuilder(dependency: AppComponent()).build()
         
         self.launchRouter = rootRouter
-        window?.rootViewController = rootRouter.presenter.uiviewController
+        window?.rootViewController = rootRouter.viewController.
         window?.makeKeyAndVisible()
 
         rootRouter.interactor.start()

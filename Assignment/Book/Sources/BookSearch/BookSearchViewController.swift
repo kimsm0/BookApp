@@ -12,13 +12,16 @@ import ArchitectureModule
 import Extensions
 
 // MARK: ViewController에서 구현해야할 프로토콜들
-// Interator -> ViewController
+// Router -> ViewController
 protocol BookSearchViewControllable: ViewControllable {
     
 }
-// Router -> ViewController
+
+// Interator -> ViewController
 protocol BookSearchPresentable: Presentable {
     var interactor: BookSearchInteractable? { get set }
+    func showAlert(message: String)
+    func showToast(message: String)
 }
 
 class BookSearchViewController: UIViewController, BookSearchPresentable, BookSearchViewControllable {
@@ -31,5 +34,12 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
     }
 }
 
-
+extension BookSearchViewController {
+    func showAlert(message: String) {
+        
+    }
+    func showToast(message: String) {
+        
+    }
+}
 

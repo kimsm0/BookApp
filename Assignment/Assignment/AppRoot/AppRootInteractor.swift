@@ -29,11 +29,11 @@ protocol AppRootInteractable: Interactable, BookSearchParentInteractable {
     var router: AppRootRouting? { get set }
 }
 
-class AppRootInteractor: Interactor<AppRootViewControllable>, AppRootInteractable {
+class AppRootInteractor: Interactor<AppRootPresentable>, AppRootInteractable {
     
     weak var router: AppRootRouting?
     
-    override init(presenter: AppRootViewControllable) {
+    override init(presenter: AppRootPresentable) {
         super.init(presenter: presenter)
         presenter.interactor = self 
     }

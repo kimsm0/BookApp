@@ -10,6 +10,12 @@ let package = Package(
         .library(
             name: "BookSearch",
             targets: ["BookSearch"]),
+        .library(
+            name: "BookDataModel",
+            targets: ["BookDataModel"]),
+        .library(
+            name: "BookRepository",
+            targets: ["BookRepository"]),
     ],
     dependencies: [
         .package(path: "../Platform"),
@@ -21,6 +27,23 @@ let package = Package(
                 .product(name: "ArchitectureModule", package: "Platform"),
                 .product(name: "Extensions", package: "Platform"),
                 .product(name: "CustomUI", package: "Platform"),
+                "BookRepository",
+                "BookDataModel"
+            ]
+        ),
+        .target(
+            name: "BookDataModel",
+            dependencies: [
+            ]
+        ),
+        .target(
+            name: "BookRepository",
+            dependencies: [
+                .product(name: "Extensions", package: "Platform"),
+                .product(name: "Network", package: "Platform"),
+                .product(name: "Utils", package: "Platform"),
+                .product(name: "Common", package: "Platform"),
+                "BookDataModel"
             ]
         ),
     ]

@@ -9,15 +9,20 @@
 
 import Foundation
 import ArchitectureModule
+import BookRepository
 
 public protocol BookSearchDependency: Dependency {
-    
+    var bookRepository: BookRepositoryType { get }
+    var mainQueue: DispatchQueue { get }
 }
 
-final class BookSearchDependencyBox: DependencyBox<BookSearchDependency> {
+final class BookSearchDependencyBox: DependencyBox<BookSearchDependency>, BookSearchInteractorDependency {
         
-    override init(dependency: BookSearchDependency) {
-        super.init(dependency: dependency)
+    var bookRepository: BookRepositoryType{
+        dependency.bookRepository
+    }
+    var mainQueue: DispatchQueue{
+        dependency.mainQueue
     }
 }
 
@@ -38,12 +43,15 @@ public final class BookSearchBuilder: Builder<BookSearchDependency>, BookSearchB
 
     public func build(parentInteractor: BookSearchParentInteractable) -> Routing {
         let viewController = BookSearchViewController()
-                        
-        let interactor = BookSearchInteractor(presenter: viewController)
+                       
+        let dependencyBox = BookSearchDependencyBox(dependency: dependency)
+        
+        let interactor = BookSearchInteractor(presenter: viewController,
+                                              dependency: dependencyBox)
         interactor.parentInteractor = parentInteractor
         
         let router = BookSearchRouter(interactor: interactor,
-                                   presenter: viewController)
+                                      viewController: viewController)
         return router
     }
 }
