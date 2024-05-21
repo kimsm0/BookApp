@@ -12,15 +12,13 @@
  */
 
 public protocol Interactable: AnyObject {
-    var parentInteractor: Interactable? { get set } //상위 리블렛의 인터렉터
     func start()
 }
 
 open class Interactor<PresenterType>: Interactable {
         
     let presenter: PresenterType
-    public var parentInteractor: Interactable?
-    
+
     public init(presenter: PresenterType) {
         self.presenter = presenter
     }

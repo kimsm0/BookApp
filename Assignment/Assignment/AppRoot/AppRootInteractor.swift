@@ -9,14 +9,15 @@
  */
 import Foundation
 import ArchitectureModule
+import BookSearch
 
 // MARK: Interactor에서 구현해야할 프로토콜
 // Presenter -> Interactor
 protocol AppRootInteractableForPresenter {
     
 }
-// 하위리블렛 -> 현재(상위) Interactor
-protocol AppRootInteractableForChild {
+// 현재리블렛 -> 상위리블렛의 Interactor
+protocol AppRootParentInteractable {
     
 }
 
@@ -24,21 +25,21 @@ protocol AppRootInteractableForChild {
  Interactor에서 구현해야할 프로토콜
  다른 레이어에서 접근시 사용.
  */
-protocol AppRootInteractable: Interactable {
+protocol AppRootInteractable: Interactable, BookSearchParentInteractable {
     var router: AppRootRouting? { get set }
 }
 
-class AppRootInteractor: Interactor<AppRootPresentable>, AppRootInteractable {
+class AppRootInteractor: Interactor<AppRootViewControllable>, AppRootInteractable {
     
     weak var router: AppRootRouting?
     
-    override init(presenter: AppRootPresentable) {
+    override init(presenter: AppRootViewControllable) {
         super.init(presenter: presenter)
         presenter.interactor = self 
     }
         
     override func start() {
-        
+        router?.attachBookSearch()
     }
 }
 
@@ -46,9 +47,7 @@ extension AppRootInteractor: AppRootInteractableForPresenter {
     
 }
 
-extension AppRootInteractor: AppRootInteractableForChild {
-    
-}
+
 
 
 

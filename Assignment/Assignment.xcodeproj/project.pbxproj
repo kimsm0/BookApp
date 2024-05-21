@@ -26,6 +26,7 @@
 		31A059AE2BFC4D31006772DD /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A059A92BFC4D31006772DD /* AppRootRouter.swift */; };
 		31A059AF2BFC4D31006772DD /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A059AA2BFC4D31006772DD /* AppRootViewController.swift */; };
 		31A059B12BFC4D5B006772DD /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A059B02BFC4D5B006772DD /* AppComponent.swift */; };
+		31EB8F9A2BFC5567001D6445 /* BookSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 31EB8F992BFC5567001D6445 /* BookSearch */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		31A059A92BFC4D31006772DD /* AppRootRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
 		31A059AA2BFC4D31006772DD /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		31A059B02BFC4D5B006772DD /* AppComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
+		31EB8F972BFC54A9001D6445 /* Book */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Book; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				31A059A42BFC4C98006772DD /* Storage in Frameworks */,
 				31A0599A2BFC4C98006772DD /* ArchitectureModule in Frameworks */,
 				31A0599E2BFC4C98006772DD /* CustomUI in Frameworks */,
+				31EB8F9A2BFC5567001D6445 /* BookSearch in Frameworks */,
 				31A059A02BFC4C98006772DD /* Extensions in Frameworks */,
 				31A0599C2BFC4C98006772DD /* Common in Frameworks */,
 				31A059A62BFC4C98006772DD /* Utils in Frameworks */,
@@ -99,10 +102,12 @@
 		31A00B8A2BFC49D9006A9F2A = {
 			isa = PBXGroup;
 			children = (
+				31EB8F972BFC54A9001D6445 /* Book */,
 				31A00B952BFC49D9006A9F2A /* Assignment */,
 				31A00BAC2BFC49DA006A9F2A /* AssignmentTests */,
 				31A00BB62BFC49DA006A9F2A /* AssignmentUITests */,
 				31A00B942BFC49D9006A9F2A /* Products */,
+				31EB8F982BFC5567001D6445 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,6 +171,13 @@
 			path = AppRoot;
 			sourceTree = "<group>";
 		};
+		31EB8F982BFC5567001D6445 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,6 +202,7 @@
 				31A059A12BFC4C98006772DD /* Network */,
 				31A059A32BFC4C98006772DD /* Storage */,
 				31A059A52BFC4C98006772DD /* Utils */,
+				31EB8F992BFC5567001D6445 /* BookSearch */,
 			);
 			productName = Assignment;
 			productReference = 31A00B932BFC49D9006A9F2A /* Assignment.app */;
@@ -689,6 +702,10 @@
 		31A059A52BFC4C98006772DD /* Utils */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Utils;
+		};
+		31EB8F992BFC5567001D6445 /* BookSearch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BookSearch;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

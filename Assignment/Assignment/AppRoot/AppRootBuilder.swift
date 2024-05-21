@@ -10,12 +10,13 @@
  */
 import Foundation
 import ArchitectureModule
+import BookSearch
 
 protocol AppRootDependency: Dependency {
     
 }
 
-final class AppRootDependencyBox: DependencyBox<AppRootDependency> {
+final class AppRootDependencyBox: DependencyBox<AppRootDependency>, BookSearchDependency {
         
     override init(dependency: AppRootDependency) {
         super.init(dependency: dependency)
@@ -45,8 +46,14 @@ final class AppRootBuilder: Builder<AppRootDependency>, AppRootBuildable {
         )
         
         let interactor = AppRootInteractor(presenter: viewController)
+        
+        //child
+        let bookSearchBuiler = BookSearchBuilder(dependency: dependencyBox)
+        
         let router = AppRootRouter(interactor: interactor,
-                                   presenter: viewController)
+                                   presenter: viewController,
+                                   bookSearchBuildable: bookSearchBuiler
+        )
         return router
     }
 }

@@ -17,11 +17,11 @@ import Extensions
 // MARK: ViewController에서 구현해야할 프로토콜들
 // Interator -> ViewController
 protocol AppRootViewControllable: ViewControllable {
-    func setViewController(vc: ViewControllable)
+    var interactor: AppRootInteractable? { get set }    
 }
 // Router -> ViewController
 protocol AppRootPresentable: Presentable {
-    var interactor: AppRootInteractable? { get set }
+    func setViewController(vc: ViewControllable)
 }
 
 class AppRootViewController: UINavigationController, AppRootPresentable, AppRootViewControllable {
