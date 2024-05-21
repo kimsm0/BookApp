@@ -10,7 +10,7 @@ import UIKit
 import Extensions
 import Combine
 
-public class SearchView: UIView {
+public final class SearchView: UIView {
     
     private var subscriptions = Set<AnyCancellable>()
     

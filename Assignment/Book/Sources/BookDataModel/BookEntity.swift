@@ -66,7 +66,7 @@ public struct BookDetailEntity: Codable {
     public let price: String
     public let image: String
     public let url: String
-    public let pdf: PDFEntity
+    public let pdf: PDFEntity?
     
     public init(error: String,
                 title: String,
@@ -82,7 +82,7 @@ public struct BookDetailEntity: Codable {
                 price: String,
                 image: String,
                 url: String,
-                pdf: PDFEntity
+                pdf: PDFEntity?
                 
     ) {
         self.error = error

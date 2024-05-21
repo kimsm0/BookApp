@@ -10,13 +10,14 @@
 import Foundation
 import ArchitectureModule
 import BookRepository
+import BookDetail
 
 public protocol BookSearchDependency: Dependency {
     var bookRepository: BookRepositoryType { get }
     var mainQueue: DispatchQueue { get }
 }
 
-final class BookSearchDependencyBox: DependencyBox<BookSearchDependency>, BookSearchInteractorDependency {
+final class BookSearchDependencyBox: DependencyBox<BookSearchDependency>, BookSearchInteractorDependency, BookDetailDependency {
         
     var bookRepository: BookRepositoryType{
         dependency.bookRepository
@@ -50,8 +51,11 @@ public final class BookSearchBuilder: Builder<BookSearchDependency>, BookSearchB
                                               dependency: dependencyBox)
         interactor.parentInteractor = parentInteractor
         
+        let bookDetailBuilder = BookDetailBuilder(dependency: dependencyBox)
+        
         let router = BookSearchRouter(interactor: interactor,
-                                      viewController: viewController)
+                                      viewController: viewController,
+                                      bookDetailBuildable: bookDetailBuilder)
         return router
     }
 }

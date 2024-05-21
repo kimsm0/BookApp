@@ -9,7 +9,7 @@
 
 import UIKit
 
-public class LoadingView {
+public final class LoadingView {
     public static func showLoading() {
         DispatchQueue.main.async {
             let scenes = UIApplication.shared.connectedScenes

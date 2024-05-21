@@ -71,6 +71,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .defaultBg
         self.setupNavigationItem(left: nil,
                                  right: nil,
                                  title: "책 검색")
