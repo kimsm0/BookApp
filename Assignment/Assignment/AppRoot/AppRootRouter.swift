@@ -10,25 +10,38 @@
 import Foundation
 import ArchitectureModule
 import Extensions
-
+import BookSearch
 
 // MARK: Router에서 구현해야할 프로토콜 
 protocol AppRootRouting: Routing {
-    
+    func attachBookSearch()
 }
 
-class AppRootRouter: Router<AppRootInteractable, AppRootPresentable> {
+class AppRootRouter: Router<AppRootInteractable, AppRootViewControllable> {
     
-    override init(interactor: AppRootInteractable,
-         presenter: AppRootPresentable
+    private var bookSearchBuildable: BookSearchBuildable
+    private var bookSearchRouting: Routing?
+    
+    init(interactor: AppRootInteractable,
+         viewController: AppRootViewControllable,
+         bookSearchBuildable: BookSearchBuildable
+         
     ) {
-        super.init(interactor: interactor, presenter: presenter)
+        self.bookSearchBuildable = bookSearchBuildable
+        super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
-    }
+    }    
 }
 
 extension AppRootRouter: AppRootRouting {
-    
+    func attachBookSearch() {
+        if bookSearchRouting == nil {
+            let router = bookSearchBuildable.build(parentInteractor: interactable)
+            bookSearchRouting = router
+            attach(child: router)
+            viewControllerable.setViewController(vc: router.viewController)
+        }
+    }
 }
 
 

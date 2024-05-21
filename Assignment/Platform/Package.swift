@@ -37,7 +37,11 @@ let package = Package(
             "Extensions",
         ]),
         .target(
-            name: "Storage"),
+            name: "Storage",
+            dependencies: [                
+                "Extensions"
+            ]
+        ),
         .target(
             name: "Common",
             dependencies: [
@@ -64,7 +68,8 @@ let package = Package(
         .target(
             name: "Network",
             dependencies: [
-                "Common"
+                "Common",
+                "Storage"
             ]
         ),
     ]

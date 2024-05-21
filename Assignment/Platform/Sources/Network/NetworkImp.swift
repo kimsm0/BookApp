@@ -40,7 +40,9 @@ public final class NetworkImp: Network {
                     return Response(output: output, statusCode: code ?? 999)
                 }.mapError{
                     printLog($0)
-                    if $0.localizedDescription.contains("format") {
+                    if $0.localizedDescription.contains("format") ||
+                        $0.localizedDescription.contains("keyNotFound")
+                    {
                         return NetworkError.decodingError
                     }
                     return $0

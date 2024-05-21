@@ -15,7 +15,7 @@ public enum NetworkError: Error, Equatable{
     case unauthorized //401 인증에러
     case serverError //500번대
     case invalidURL(String) //url 에러
-    case decodingError
+    case decodingError    
     
     public var customCode: String {
         switch self {

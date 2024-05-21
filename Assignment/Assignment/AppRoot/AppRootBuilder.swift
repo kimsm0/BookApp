@@ -10,14 +10,29 @@
  */
 import Foundation
 import ArchitectureModule
+import BookSearch
+import Network
+import BookRepository
 
 protocol AppRootDependency: Dependency {
     
 }
 
-final class AppRootDependencyBox: DependencyBox<AppRootDependency> {
+final class AppRootDependencyBox: DependencyBox<AppRootDependency>, BookSearchDependency {
         
+    var mainQueue: DispatchQueue {
+        .main
+    }
+    var bookRepository: BookRepositoryType
+    
     override init(dependency: AppRootDependency) {
+        let config = URLSessionConfiguration.default
+        let network = NetworkImp(session: URLSession(configuration: config))
+        
+        self.bookRepository = BookRepository(network: network, 
+                                             baseURL: URL(string: API().baseURL)!,
+                                             imageCacheServie: ImageCacheService()
+        )
         super.init(dependency: dependency)
     }
 }
@@ -43,10 +58,14 @@ final class AppRootBuilder: Builder<AppRootDependency>, AppRootBuildable {
         let dependencyBox = AppRootDependencyBox(
             dependency: dependency
         )
-        
         let interactor = AppRootInteractor(presenter: viewController)
+        //child
+        let bookSearchBuiler = BookSearchBuilder(dependency: dependencyBox)
+        
         let router = AppRootRouter(interactor: interactor,
-                                   presenter: viewController)
+                                   viewController: viewController,
+                                   bookSearchBuildable: bookSearchBuiler
+        )
         return router
     }
 }
