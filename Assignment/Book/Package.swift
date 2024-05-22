@@ -19,6 +19,9 @@ let package = Package(
         .library(
             name: "BookDetail",
             targets: ["BookDetail"]),
+        .library(
+            name: "BookTestSupport",
+            targets: ["BookTestSupport"]),
     ],
     dependencies: [
         .package(path: "../Platform"),
@@ -62,8 +65,40 @@ let package = Package(
                 .product(name: "Network", package: "Platform"),
                 .product(name: "Utils", package: "Platform"),
                 .product(name: "Common", package: "Platform"),
+                .product(name: "CustomUI", package: "Platform"),
                 "BookDataModel"
             ]
         ),
+        .target(
+            name: "BookTestSupport",
+            dependencies: [
+                "BookRepository",
+                .product(name: "Extensions", package: "Platform"),
+                .product(name: "Common", package: "Platform"),
+            ]
+        ),
+        .testTarget(name: "BookSearchTest",
+                   dependencies: [
+                    .product(name: "Extensions", package: "Platform"),
+                    .product(name: "Common", package: "Platform"),
+                    .product(name: "Network", package: "Platform"),
+                    .product(name: "Utils", package: "Platform"),
+                    "BookDataModel",
+                    "BookRepository",
+                    "BookTestSupport",
+                    "BookSearch"
+                   ]),
+        .testTarget(name: "BookDetailTest",
+                   dependencies: [
+                    .product(name: "Extensions", package: "Platform"),
+                    .product(name: "Common", package: "Platform"),
+                    .product(name: "Network", package: "Platform"),
+                    .product(name: "Utils", package: "Platform"),
+                    .product(name: "WebView", package: "WebView"),
+                    "BookDataModel",
+                    "BookRepository",
+                    "BookTestSupport",
+                    "BookDetail"
+                   ]),
     ]
 )
