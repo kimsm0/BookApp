@@ -55,7 +55,7 @@ final class BookSearchCell: UITableViewCell {
         let label = UILabel()
         label.font = .regular12
         label.textColor = .defaultFont
-        label.accessibilityIdentifier = "book_search_cell_subtitle"
+        label.accessibilityIdentifier = "book_search_cell_price"
         return label
     }()
    

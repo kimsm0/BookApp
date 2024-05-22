@@ -54,6 +54,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
     private let detailImageView: CustomImageView = {
         let imageView = CustomImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.accessibilityIdentifier = "bookdetail_imageview"
         return imageView
     }()
     private let topLineView: UIView = {
@@ -67,7 +68,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .bold25
         label.textColor = .defaultFont
         label.numberOfLines = 0
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_title"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -77,7 +78,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .semibold16
         label.textColor = .defaultFont
         label.numberOfLines = 0
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_subtitle"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -92,7 +93,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .regular15
         label.textColor = .defaultFont
         label.numberOfLines = 0
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_author"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -102,7 +103,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .regular15
         label.textColor = .defaultFont
         label.numberOfLines = 0
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_publisher"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -120,7 +121,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .regular15
         label.textColor = .defaultFont
         label.numberOfLines = 0
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_desc"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -130,7 +131,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .regular12
         label.textColor = .defaultFont
         label.numberOfLines = 2
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_isbn"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -140,7 +141,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.font = .regular12
         label.textColor = .defaultFont
         label.numberOfLines = 2
-        label.accessibilityIdentifier = "newsdetail_title"
+        label.accessibilityIdentifier = "bookdetail_price"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -153,6 +154,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         btn.layer.borderColor = UIColor.black.cgColor
         btn.layer.borderWidth = 1
         btn.layer.cornerRadius = 6
+        btn.accessibilityIdentifier = "bookdetail_pdf_button"
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -166,6 +168,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         btn.layer.borderWidth = 1
         btn.layer.cornerRadius = 6
         btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.accessibilityIdentifier = "bookdetail_detail_button"
         return btn
     }()
     

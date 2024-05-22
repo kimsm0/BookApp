@@ -10,7 +10,7 @@
 import Foundation
 import ArchitectureModule
 
-final class AppComponent: DependencyBox<EmptyDependency>, AppRootDependency {
+final class AppComponent: DependencyBox<EmptyDependency>, AppRootDependency,AppRootTestDependency {
   
   init() {
     super.init(dependency: EmptyDependencyBox())

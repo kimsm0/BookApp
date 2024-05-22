@@ -37,7 +37,7 @@ public final class SearchView: UIView {
         tf.placeholder = "검색어를 입력하세요."
         tf.borderStyle = .none
         tf.returnKeyType = .search
-        tf.accessibilityIdentifier = "todo_main_textfield"
+        tf.accessibilityIdentifier = "search_textfield"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.clearButtonMode = .always
         return tf

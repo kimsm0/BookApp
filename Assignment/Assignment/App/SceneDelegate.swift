@@ -7,6 +7,7 @@
 
 import UIKit
 import ArchitectureModule
+import BookTestSupport
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,11 +19,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         
-        let rootRouter = AppRootBuilder(dependency: AppComponent()).build()
-        
+        #if UITESTING
+        BookTestDouble.testMode = .detail
+        let rootRouter = AppRootTestBuilder(dependency: AppComponent()).build()
         self.launchRouter = rootRouter
         window?.rootViewController = rootRouter.viewController.uiviewController
         window?.makeKeyAndVisible()
+        #else
+        let rootRouter = AppRootBuilder(dependency: AppComponent()).build()
+        self.launchRouter = rootRouter
+        window?.rootViewController = rootRouter.viewController.uiviewController
+        window?.makeKeyAndVisible()
+        #endif
+        
+        
 
         rootRouter.interactor.start()
     }
