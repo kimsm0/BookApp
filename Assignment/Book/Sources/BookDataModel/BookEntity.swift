@@ -11,7 +11,7 @@
 import Foundation
 
 // MARK: - Total
-public struct BookTotalEntity: Codable {
+public struct BookTotalEntity {
     public let total: Int
     public let page: Int
     public var books: [BookEntity]
@@ -27,7 +27,7 @@ public struct BookTotalEntity: Codable {
 }
 
 
-public struct BookEntity: Codable {
+public struct BookEntity {
     public let title: String
     public let subtitle: String
     public let isbn13: String
@@ -51,7 +51,7 @@ public struct BookEntity: Codable {
     }
 }
 
-public struct BookDetailEntity: Codable {
+public struct BookDetailEntity {
     public let error: String
     public let title: String
     public let subtitle: String
@@ -82,7 +82,7 @@ public struct BookDetailEntity: Codable {
                 price: String,
                 image: String,
                 url: String,
-                pdf: PDFEntity?
+                pdf: [String: String]?
                 
     ) {
         self.error = error
@@ -99,18 +99,26 @@ public struct BookDetailEntity: Codable {
         self.price = price
         self.image = image
         self.url = url
-        self.pdf = pdf
+        self.pdf = PDFEntity(pdf: pdf)
+    }
+    
+
+    public static func initEntity() -> BookDetailEntity {
+        return .init(error: "", title: "", subtitle: "", authors: "", publisher: "", isbn10: "", isbn13: "", pages: "", year: "", rating: "", desc: "", price: "", image: "", url: "", pdf: [:])
     }
 }
 
-public struct PDFEntity: Codable {
-    public let chapter2: String
-    public let chapter5: String
+public struct PDFEntity {
+    public let pdf: [String: String]?
     
-    public init(chapter2: String,
-                chapter5: String
-    ){
-        self.chapter2 = chapter2
-        self.chapter5 = chapter5
+    public var chapter2: String{
+        pdf?["Chapter 2"] ?? ""
+    }
+    public var chapter5: String{
+        pdf?["Chapter 5"] ?? ""
+    }
+    
+    public init(pdf: [String: String]?){
+        self.pdf = pdf
     }
 }

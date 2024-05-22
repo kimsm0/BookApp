@@ -22,6 +22,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Platform"),
+        .package(path: "../WebView"),
     ],
     targets: [
         .target(
@@ -43,8 +44,10 @@ let package = Package(
                 .product(name: "Extensions", package: "Platform"),
                 .product(name: "CustomUI", package: "Platform"),
                 .product(name: "Storage", package: "Platform"),
+                .product(name: "WebView", package: "WebView"),
                 "BookRepository",
-                "BookDataModel",            
+                "BookDataModel", 
+                
             ]
         ),
         .target(

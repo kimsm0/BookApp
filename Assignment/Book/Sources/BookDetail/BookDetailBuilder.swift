@@ -11,13 +11,15 @@
 import Foundation
 import ArchitectureModule
 import BookRepository
+import WebView
 
 public protocol BookDetailDependency: Dependency {
     var bookRepository: BookRepositoryType { get }
     var mainQueue: DispatchQueue { get }
 }
 
-final class BookDetailDependencyBox: DependencyBox<BookDetailDependency>, BookDetailInteractorDependency {
+final class BookDetailDependencyBox: DependencyBox<BookDetailDependency>, BookDetailInteractorDependency,
+WebViewDependency {
     var bookRepository: BookRepositoryType{
         dependency.bookRepository
     }
@@ -56,8 +58,12 @@ public final class BookDetailBuilder: Builder<BookDetailDependency>, BookDetailB
                                               dependency: dependencyBox)
         interactor.parentInteractor = parentInteractor
         
+        //child
+        let webViewBuilder = WebViewBuilder(dependency: dependencyBox)
+        
         let router = BookDetailRouter(interactor: interactor,
-                                      viewController: viewController)
+                                      viewController: viewController,
+                                      webViewBuildable: webViewBuilder)
         return router
     }
 }

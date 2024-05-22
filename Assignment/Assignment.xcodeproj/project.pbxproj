@@ -64,6 +64,7 @@
 		31A059A92BFC4D31006772DD /* AppRootRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
 		31A059AA2BFC4D31006772DD /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		31A059B02BFC4D5B006772DD /* AppComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
+		31A580232BFD9CC500374BA5 /* WebView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = WebView; sourceTree = "<group>"; };
 		31EB8F972BFC54A9001D6445 /* Book */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Book; sourceTree = "<group>"; };
 		31EB8F9C2BFC9BCB001D6445 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +105,7 @@
 		31A00B8A2BFC49D9006A9F2A = {
 			isa = PBXGroup;
 			children = (
+				31A580232BFD9CC500374BA5 /* WebView */,
 				31EB8F972BFC54A9001D6445 /* Book */,
 				31A00B952BFC49D9006A9F2A /* Assignment */,
 				31A00BAC2BFC49DA006A9F2A /* AssignmentTests */,

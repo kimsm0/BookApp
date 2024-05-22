@@ -19,9 +19,10 @@ import Storage
 public protocol BookRepositoryType {
     var baseURLString: String { get }
     var bookList: ReadOnlyCurrentValuePublisher<BookTotalEntity> { get }
+    var bookDetail: ReadOnlyCurrentValuePublisher<BookDetailEntity> { get }    
     var resultError: ReadOnlyCurrentValuePublisher<NetworkError?> { get }
     func searchBooks(curPage: Int, query: String)
-    func getBookDetail(id: String) -> AnyPublisher<BookDetailEntity, NetworkError>
+    func getBookDetail(id: String)
     func loadImage(url: String) -> AnyPublisher<(UIImage?, String), Never>
 }
 
@@ -34,6 +35,13 @@ public final class BookRepository: BookRepositoryType {
     private let bookListSubject = CurrentValuePublisher<BookTotalEntity>(.init(total: 0,
                                                                                page: 0,
                                                                                books: []))
+    
+    public var bookDetail: ReadOnlyCurrentValuePublisher<BookDetailEntity> {
+        bookDetailSubject
+    }
+    
+    private let bookDetailSubject = CurrentValuePublisher<BookDetailEntity>(.initEntity())
+    
     public var resultError: ReadOnlyCurrentValuePublisher<NetworkError?> {
         resultErrorSubject
     }
@@ -97,11 +105,11 @@ public extension BookRepository {
             .store(in: &subscriptions)
     }
     
-    func getBookDetail(id: String) -> AnyPublisher<BookDetailEntity, NetworkError> {
+    func getBookDetail(id: String) {
         LoadingView.showLoading()
         let request = BookDetailRequest(baseURL: baseURL, id: id)
         
-        return network
+         network
             .send(request)
             .map(\.output)
             .map{ $0.toEntity() }
@@ -114,10 +122,12 @@ public extension BookRepository {
                     return NetworkError.error(error,999)
                 }
             }
-            .handleEvents(receiveCompletion: { completion in
+            .handleEvents(receiveOutput: {[weak self] output in
                 LoadingView.hideLoading()
+                self?.bookDetailSubject.send(output)
             })
-            .eraseToAnyPublisher()
+            .sink(receiveCompletion: {_ in }, receiveValue: { _ in })
+            .store(in: &subscriptions)
     }
     
     func loadImage(url: String) -> AnyPublisher<(UIImage?,String), Never> {

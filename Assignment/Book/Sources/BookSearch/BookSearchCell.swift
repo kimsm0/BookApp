@@ -4,15 +4,15 @@ import Combine
 import Extensions
 import BookDataModel
 import Network
+import CustomUI
 
 final class BookSearchCell: UITableViewCell {
         
-    private let bookImageView: UIImageView = {
-        let imgView = UIImageView()
+    private let bookImageView: CustomImageView = {
+        let imgView = CustomImageView()
         imgView.contentMode = .scaleAspectFit
         imgView.accessibilityIdentifier = "book_search_cell_image"
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.image = UIImage(systemName: "photo")
+        imgView.translatesAutoresizingMaskIntoConstraints = false        
         return imgView
     }()
     
@@ -78,7 +78,7 @@ final class BookSearchCell: UITableViewCell {
         subTitle.text = nil
         isbn13Label.text = nil
         priceLabel.text = nil
-        bookImageView.image = nil
+        bookImageView.downloadImage = nil
     }
     
     func attribute(){
@@ -118,6 +118,8 @@ final class BookSearchCell: UITableViewCell {
             priceLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
         ])
+        
+        bookImageView.layoutUpdate()
     }
     
     func config(book: BookEntity, 
@@ -134,7 +136,7 @@ final class BookSearchCell: UITableViewCell {
             .receive(on: DispatchQueue.main)
             .sink {[weak self] output in
                 if let id = self?.id, output.1 == id {
-                    self?.bookImageView.image = output.0
+                    self?.bookImageView.downloadImage = output.0
                 }
             }.store(in: &subscriptions)
     }

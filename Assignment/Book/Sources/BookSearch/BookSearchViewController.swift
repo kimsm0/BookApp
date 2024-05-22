@@ -87,7 +87,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
     private func attribute(){
         tableView.dataSource = self
         tableView.delegate = self
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .defaultBg
     }
     
     private func layout(){
@@ -116,7 +116,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
             .receive(on: DispatchQueue.main)
             .sink {[weak self] text in
                 self?.interactor?.searchBooks(text)
-            }.store(in: &subscriptions)
+            }.store(in: &subscriptions)                
     }
     
     func update(_ with: [BookEntity], needToScrollToTop: Bool) {
@@ -129,6 +129,11 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
             guideLabel.isHidden = true
             tableView.isHidden = false
             tableView.reloadData()
+        }
+        if needToScrollToTop {
+            DispatchQueue.main.async {
+                self.tableView.setContentOffset(CGPoint.zero, animated: true)
+            }
         }
     }
 }

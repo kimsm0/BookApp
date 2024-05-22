@@ -61,9 +61,11 @@ public extension UIViewController {
             switch left {
             case .dismiss(let type, let target, let selector):
                 let button = UIButton()
-                button.setImage(UIImage(systemName: type.iconSystemName,withConfiguration: UIImage.SymbolConfiguration(pointSize: 18,weight: .semibold)), for: .normal)
+                let img = UIImage(systemName: type.iconSystemName)?.withTintColor(.defaultFont, renderingMode: .alwaysOriginal)
+                img?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 18,weight: .semibold))
+                button.setImage(img, for: .normal)
                 button.setTitle(type.title, for: .normal)
-                button.setTitleColor(.systemBlue, for: .normal)
+                button.setTitleColor(.defaultFont, for: .normal)
                 button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
                 button.addTarget(target, action: selector, for: .touchUpInside)
                 button.frame.size.width = 60
@@ -71,6 +73,7 @@ public extension UIViewController {
                 leftItem.customView = button
             }
             leftItem.style = .plain
+            leftItem.tintColor = .defaultFont
             navigationItem.hidesBackButton = true
             navigationItem.leftBarButtonItem = leftItem
         }
@@ -84,12 +87,13 @@ public extension UIViewController {
                     withConfiguration: UIImage.SymbolConfiguration(pointSize: 18,
                                                                    weight: .regular)
                 )
+                rightItem.image?.withTintColor(.defaultFont, renderingMode: .alwaysOriginal)
                 rightItem.target = target
                 rightItem.action = selector
                 rightItem.accessibilityIdentifier = "todo_navi_dismiss"
             }
             rightItem.style = .plain
-            //rightItem.tintColor = .black
+            rightItem.tintColor = .defaultFont
             navigationItem.rightBarButtonItem = rightItem
         }
         

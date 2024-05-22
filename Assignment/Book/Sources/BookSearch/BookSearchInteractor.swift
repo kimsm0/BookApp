@@ -92,6 +92,7 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
 extension BookSearchInteractor: BookSearchInteractableForPresenter {
     func searchBooks(_ query: String){
         self.query = query
+        self.curPage = 1
         if !query.isEmpty {
             dependency.bookRepository.searchBooks(curPage: curPage, query: query)
         }else {
@@ -105,7 +106,7 @@ extension BookSearchInteractor: BookSearchInteractableForPresenter {
             let query
         {
             curPage += 1
-            searchBooks(query)
+            dependency.bookRepository.searchBooks(curPage: curPage, query: query)
         }
     }
     

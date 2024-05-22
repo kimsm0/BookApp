@@ -38,18 +38,20 @@ public final class RatingView: UIView {
         }
     }
 
-    public func setScore(for stars: Int) {
+    public func setScore(_ score: Float) {
         self.isHidden = false
         for (index,view) in starImageViews.enumerated() {
-            if index <= stars / 2 {
+            if index < Int(score) {
                 view.image = activeStarImage
+            } else if Float(index) < score  {
+                view.image = halfStarImage
             } else {
-                if (2 * index - stars) <= 1 {
-                    view.image = halfStarImage
-                } else {
-                    view.image = inactiveStarImage
-                }
+                view.image = inactiveStarImage
             }
-        }            
+        }
     }
 }
+
+//3.5 > 0,1,2,
+//3.5 , 3 은 0.5만표시
+//3.0 vs 3.5 , 4.0
