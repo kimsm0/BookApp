@@ -77,31 +77,33 @@ public extension BookRepository {
          network
             .send(request)
             .map(\.output)
-            .handleEvents(receiveOutput: { output in
+            .handleEvents(receiveOutput: {[weak self] output in
                 LoadingView.hideLoading()
                 var newEntity = output.toEntity()
                 
                 if curPage == 1 {
-                    self.bookListSubject.send(newEntity)
+                    self?.bookListSubject.send(newEntity)
                 }else {
-                    var preValue = self.bookListSubject.value?.books ?? []
+                    var preValue = self?.bookListSubject.value?.books ?? []
                     preValue.append(contentsOf: output.books.map{ $0.toEntity() })
                     newEntity.books = preValue
-                    self.bookListSubject.send(newEntity)
+                    self?.bookListSubject.send(newEntity)
                 }
-            }, receiveCompletion: { completion in
+            }, receiveCompletion: {[weak self] completion in
                 LoadingView.hideLoading()
                 if case let .failure(error) = completion {
                     if let networkError = error as? NetworkError {
-                        self.resultErrorSubject.send(networkError)
+                        self?.resultErrorSubject.send(networkError)
                         printLog(networkError)
                     }else{
-                        self.resultErrorSubject.send(NetworkError.error(error, 999))
+                        self?.resultErrorSubject.send(NetworkError.error(error, 999))
                         printLog(error)
                     }
                 }
             })
-            .sink(receiveCompletion: {_ in }, receiveValue: { _ in })
+            .sink(receiveCompletion: {[weak self] _ in
+                self?.resultErrorSubject.send(nil)
+            }, receiveValue: { _ in })
             .store(in: &subscriptions)
     }
     
@@ -126,7 +128,9 @@ public extension BookRepository {
                 LoadingView.hideLoading()
                 self?.bookDetailSubject.send(output)
             })
-            .sink(receiveCompletion: {_ in }, receiveValue: { _ in })
+            .sink(receiveCompletion: {[weak self] _ in
+                self?.resultErrorSubject.send(nil)
+            }, receiveValue: { _ in })
             .store(in: &subscriptions)
     }
     

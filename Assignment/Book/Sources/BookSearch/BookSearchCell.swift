@@ -19,6 +19,8 @@ final class BookSearchCell: UITableViewCell {
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 3
+        stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -32,7 +34,7 @@ final class BookSearchCell: UITableViewCell {
         return label
     }()
     
-    private let subTitle: UILabel = {
+    private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .regular12
         label.textColor = .defaultFont
@@ -45,7 +47,6 @@ final class BookSearchCell: UITableViewCell {
         let label = UILabel()
         label.font = .regular12
         label.textColor = .defaultFont
-        label.numberOfLines = 0
         label.accessibilityIdentifier = "book_search_cell_isbn13"
         return label
     }()
@@ -54,7 +55,6 @@ final class BookSearchCell: UITableViewCell {
         let label = UILabel()
         label.font = .regular12
         label.textColor = .defaultFont
-        label.numberOfLines = 0
         label.accessibilityIdentifier = "book_search_cell_subtitle"
         return label
     }()
@@ -75,7 +75,7 @@ final class BookSearchCell: UITableViewCell {
     
     public override func prepareForReuse() {
         titleLabel.text = nil
-        subTitle.text = nil
+        subTitleLabel.text = nil
         isbn13Label.text = nil
         priceLabel.text = nil
         bookImageView.downloadImage = nil
@@ -91,7 +91,7 @@ final class BookSearchCell: UITableViewCell {
         contentView.addSubview(stackView)
         
         stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(subTitle)
+        stackView.addArrangedSubview(subTitleLabel)
         stackView.addArrangedSubview(isbn13Label)
         stackView.addArrangedSubview(priceLabel)
         
@@ -108,26 +108,38 @@ final class BookSearchCell: UITableViewCell {
             
             titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0),
             
-            subTitle.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            subTitle.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            subTitleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            subTitleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            subTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0),
             
             isbn13Label.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             isbn13Label.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            isbn13Label.heightAnchor.constraint(equalToConstant: 12),
             
             priceLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            priceLabel.heightAnchor.constraint(equalToConstant: 12)
         ])
+        
+        // Hugging Priority 설정
+        titleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        subTitleLabel.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)//수직으로 가능한 작게 유지
+                
+        // Compression Resistance Priority 설정
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)// 수직 방향에서 압축되지 않도록
         
         bookImageView.layoutUpdate()
     }
     
-    func config(book: BookEntity, 
+    func config(book: BookEntity?,
                 interator: BookSearchInteractableForPresenter?
     ){
+        guard let book else { return }
         id = book.image
         titleLabel.text = book.title
-        subTitle.text = book.subtitle
+        subTitleLabel.text = book.subtitle
         isbn13Label.text = book.isbn13
         priceLabel.text = book.price
         

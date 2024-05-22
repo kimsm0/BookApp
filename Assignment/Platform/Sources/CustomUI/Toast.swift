@@ -28,6 +28,7 @@ public final class Toast {
                     stackView.isLayoutMarginsRelativeArrangement = true
                     stackView.insetsLayoutMarginsFromSafeArea = false
                     stackView.layer.cornerRadius = 4
+                    stackView.translatesAutoresizingMaskIntoConstraints = false 
                     return stackView
                 }()
                              
@@ -49,6 +50,7 @@ public final class Toast {
                     label.numberOfLines = 0
                     label.textAlignment = .center
                     label.accessibilityIdentifier = "toast_view_label"
+                    label.translatesAutoresizingMaskIntoConstraints = false
                     return label
                 }()
                 

@@ -15,13 +15,13 @@ public struct BookTotalDTO: Codable {
     public let page: String
     public var books: [BookDTO]
     
-    public init(total: String,
-                page: String,
-                books: [BookDTO]
+    public init(total: String?,
+                page: String?,
+                books: [BookDTO]?
     ) {
-        self.total = total
-        self.page = page
-        self.books = books
+        self.total = total ?? "0"
+        self.page = page ?? "0"
+        self.books = books ?? []
     }
     
     public func toEntity() -> BookTotalEntity {        

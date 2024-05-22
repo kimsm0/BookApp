@@ -76,14 +76,18 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
             .receive(on: dependency.mainQueue)
             .dropFirst()
             .sink {[weak self] total in
-                self?.presenter.update(total.books, needToScrollToTop: self?.curPage == 1 )
+                self?.presenter.update(total.books)
             }.store(in: &subscriptions)
         
         dependency.bookRepository.resultError
             .receive(on: dependency.mainQueue)
             .sink {[weak self] error in
                 if let self, let error {
-                    self.presenter.showAlert(message: "에러가 발생했습니다.\n잠시후 다시 시도해주세요.\(error.customCode)")
+                    if error == .decodingError(type: .keyNotFound){
+                        self.presenter.update([])
+                    }else {
+                        self.presenter.showAlert(message: "에러가 발생했습니다.\n잠시후 다시 시도해주세요.\(error.customCode)")
+                    }                    
                 }
             }.store(in: &subscriptions)
     }
@@ -91,13 +95,15 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
 
 extension BookSearchInteractor: BookSearchInteractableForPresenter {
     func searchBooks(_ query: String){
+        guard self.query != query else {
+            return
+        }
+        self.presenter.reset()
         self.query = query
         self.curPage = 1
         if !query.isEmpty {
             dependency.bookRepository.searchBooks(curPage: curPage, query: query)
-        }else {
-            self.presenter.showAlert(message: "검색어를 입력해주세요.")
-        }        
+        }       
     }
     
     func loadMore() {

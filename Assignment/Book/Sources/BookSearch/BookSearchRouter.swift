@@ -36,7 +36,10 @@ class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllabl
     }
     
     func detactedInteractionGuesture() {
-        detachBookDetail()
+        if let router = bookDetailRouting {
+            detach(child: router)
+            bookDetailRouting = nil
+        }        
     }
 }
 

@@ -26,7 +26,8 @@ protocol BookSearchPresentable: Presentable {
     var interactor: BookSearchInteractableForPresenter? { get set }
     func showAlert(message: String)
     func showToast(message: String)
-    func update(_ with: [BookEntity], needToScrollToTop: Bool)
+    func update(_ with: [BookEntity])
+    func reset()
 }
 
 class BookSearchViewController: UIViewController, BookSearchPresentable, BookSearchViewControllable {
@@ -34,7 +35,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
     private var dataSource: [BookEntity] = []
     private var subscriptions = Set<AnyCancellable>()
     weak var interactor: BookSearchInteractableForPresenter?
-    
+        
     // MARK:UI
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -48,6 +49,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
+        tableView.isHidden = true
         return tableView
     }()
     
@@ -115,25 +117,30 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
         searchView.textField.textPublisher
             .receive(on: DispatchQueue.main)
             .sink {[weak self] text in
-                self?.interactor?.searchBooks(text)
+                if text.isEmpty {
+                    self?.showToast(message: "검색어를 입력해주세요.")                    
+                }else {
+                    self?.interactor?.searchBooks(text)
+                }
             }.store(in: &subscriptions)                
     }
     
-    func update(_ with: [BookEntity], needToScrollToTop: Bool) {
+    func reset(){
+        self.dataSource.removeAll()
+        self.tableView.reloadData()
+    }
+    
+    func update(_ with: [BookEntity]) {
         self.dataSource = with
         
         if dataSource.isEmpty {
             guideLabel.isHidden = false
             tableView.isHidden = true
+            guideLabel.text = "검색 결과가 없습니다."
         }else {
             guideLabel.isHidden = true
             tableView.isHidden = false
             tableView.reloadData()
-        }
-        if needToScrollToTop {
-            DispatchQueue.main.async {
-                self.tableView.setContentOffset(CGPoint.zero, animated: true)
-            }
         }
     }
 }
@@ -145,7 +152,7 @@ extension BookSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookSearchCell", for: indexPath) as? BookSearchCell
-        cell?.config(book: dataSource[indexPath.row], interator: interactor)
+        cell?.config(book: dataSource[safe: indexPath.row], interator: interactor)
         return cell ?? UITableViewCell()
     }
     
@@ -154,7 +161,7 @@ extension BookSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if dataSource.count - 2 == indexPath.row {
+        if dataSource.count - 2 == indexPath.row && searchView.hasText {
             interactor?.loadMore()
         }
     }

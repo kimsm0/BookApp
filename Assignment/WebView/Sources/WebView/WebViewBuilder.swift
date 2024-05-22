@@ -37,7 +37,7 @@ public struct WebViewType {
             case .pdf:
                 return "PDF 상세보기"
             case .detail:
-                return "상세정보 보기"
+                return "더보기"
             }
         }
     }

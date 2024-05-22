@@ -24,8 +24,6 @@ public final class AdaptiveInteractionGestureDelegateProxy: NSObject, UIGestureR
         self.viewController = viewController
         
         super.init()
-        
-        
         self.viewController?.uiviewController.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.viewController?.uiviewController.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.viewController?.uiviewController.navigationController?.interactivePopGestureRecognizer?.addTarget(self, action: #selector(handlePopGuesture))

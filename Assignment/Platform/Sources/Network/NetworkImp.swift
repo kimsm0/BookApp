@@ -40,10 +40,19 @@ public final class NetworkImp: Network {
                     return Response(output: output, statusCode: code ?? 999)
                 }.mapError{
                     printLog($0)
-                    if $0.localizedDescription.contains("format") ||
-                        $0.localizedDescription.contains("keyNotFound")
-                    {
-                        return NetworkError.decodingError
+                    if let decodingError = $0 as? DecodingError {
+                        switch decodingError {
+                            case .dataCorrupted(let context):
+                            return NetworkError.decodingError(type: .dataCorrupted)
+                            case .keyNotFound(let key, let context):
+                            return NetworkError.decodingError(type: .keyNotFound)
+                            case .typeMismatch(let type, let context):
+                            return NetworkError.decodingError(type: .typeMismatch)
+                            case .valueNotFound(let type, let context):
+                            return NetworkError.decodingError(type: .valueNotFound)
+                            @unknown default:
+                            return NetworkError.decodingError(type: .etc)
+                            }
                     }
                     return $0
                 }

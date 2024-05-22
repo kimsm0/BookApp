@@ -16,6 +16,7 @@ public extension UIView {
     }
     
     func addLineShadow(location: ShadowLocation, offset: CGSize? = .init(width: -10, height: -2.5), opacity: Float? = 0.25){
+        self.layer.shadowPath = UIBezierPath(rect: .init(origin: .init(x: 0, y: 5), size: .init(width: UIScreen.main.bounds.width + 10, height: 50+2.5))).cgPath
         self.layer.shadowColor = UIColor.defaultShadow.cgColor
         self.layer.shadowOpacity = opacity!
         switch location {
@@ -26,5 +27,7 @@ public extension UIView {
             self.layer.shadowOffset = CGSize.init(width: 10, height: 2.5)
             self.layer.shadowRadius = abs(offset!.height)
         }
+        
     }
 }
+

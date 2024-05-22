@@ -14,6 +14,9 @@ public final class SearchView: UIView {
     
     private var subscriptions = Set<AnyCancellable>()
     
+    public var hasText: Bool {
+        textField.text != nil && !(textField.text ?? "").isEmpty
+    }
     private let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -36,6 +39,7 @@ public final class SearchView: UIView {
         tf.returnKeyType = .search
         tf.accessibilityIdentifier = "todo_main_textfield"
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.clearButtonMode = .always
         return tf
     }()
         
@@ -55,8 +59,7 @@ public final class SearchView: UIView {
     private func layout(){
         self.addSubview(containerView)
         tfContainerView.addSubview(textField)
-        containerView.addSubview(tfContainerView)
-        self.backgroundColor = .yellow.withAlphaComponent(0.3)
+        containerView.addSubview(tfContainerView)        
         
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -40),

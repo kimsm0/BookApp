@@ -56,7 +56,12 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+    private let topLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .defaultFont
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .bold25
@@ -102,7 +107,8 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         return label
     }()
     
-    private let topLineView: UIView = {
+    
+    private let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .defaultFont
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -153,7 +159,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
     
     private let detailButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle("상세 보러가기", for: .normal)
+        btn.setTitle("더보기", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.backgroundColor = .white
         btn.layer.borderColor = UIColor.black.cgColor
@@ -181,18 +187,20 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
     }
     
     func layout(){        
+        view.addSubview(topLineView)
         view.addSubview(scrollView)
         view.addSubview(pdfButton)
         view.addSubview(detailButton)
         
         scrollView.addSubview(stackView)
+        
         stackView.addArrangedSubview(detailImageView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(subTitleLabel)
         stackView.addArrangedSubview(ratingView)
         stackView.addArrangedSubview(authorLabel)
         stackView.addArrangedSubview(publisherYearPageLabel)
-        stackView.addArrangedSubview(topLineView)
+        stackView.addArrangedSubview(lineView)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(isbnLabel)
         stackView.addArrangedSubview(priceLabel)
@@ -208,8 +216,13 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
             pdfButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             pdfButton.bottomAnchor.constraint(equalTo: detailButton.topAnchor, constant: -10),
             pdfButton.heightAnchor.constraint(equalToConstant: 45),
-                                    
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                
+            topLineView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            topLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            topLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            topLineView.heightAnchor.constraint(equalToConstant: 1),
+            
+            scrollView.topAnchor.constraint(equalTo: topLineView.bottomAnchor, constant: 4),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             scrollView.bottomAnchor.constraint(equalTo: pdfButton.topAnchor, constant: -10),
@@ -219,6 +232,11 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
             stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            
+            detailImageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            detailImageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            //detailImageView.heightAnchor.constraint(equalTo: view.widthAnchor),
+            
             titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             
@@ -235,9 +253,9 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
             publisherYearPageLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             publisherYearPageLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             
-            topLineView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            topLineView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            topLineView.heightAnchor.constraint(equalToConstant: 1),
+            lineView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            lineView.heightAnchor.constraint(equalToConstant: 1),
             
             descriptionLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
