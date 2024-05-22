@@ -18,36 +18,6 @@
             endingLineNumber = "58"
             landmarkName = "popViewController(animated:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "62E3E01F-E019-4541-8D37-41AD319BA3D4 - a3e0900ab9df11f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Extensions.ViewControllable.popViewController(animated: Swift.Bool) -&gt; ()"
-                  moduleName = "BookDetailTest"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kimsoomin_mac2022/Desktop/MyWork/Assignment_carrot/Assignment/Platform/Sources/Extensions/ViewControllerable+Ex.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58">
-               </Location>
-               <Location
-                  uuid = "62E3E01F-E019-4541-8D37-41AD319BA3D4 - a3e0900ab9df11f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Extensions.ViewControllable.popViewController(animated: Swift.Bool) -&gt; ()"
-                  moduleName = "BookDetailTest"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kimsoomin_mac2022/Desktop/MyWork/Assignment_carrot/Assignment/Platform/Sources/Extensions/ViewControllerable+Ex.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

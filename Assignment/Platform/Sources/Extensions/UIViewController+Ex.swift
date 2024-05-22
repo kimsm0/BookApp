@@ -69,7 +69,7 @@ public extension UIViewController {
                 button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
                 button.addTarget(target, action: selector, for: .touchUpInside)
                 button.frame.size.width = 60
-                leftItem.accessibilityIdentifier = "todo_navi_back"
+                leftItem.accessibilityIdentifier = "navi_back"
                 leftItem.customView = button
             }
             leftItem.style = .plain
@@ -90,7 +90,7 @@ public extension UIViewController {
                 rightItem.image?.withTintColor(.defaultFont, renderingMode: .alwaysOriginal)
                 rightItem.target = target
                 rightItem.action = selector
-                rightItem.accessibilityIdentifier = "todo_navi_dismiss"
+                rightItem.accessibilityIdentifier = "navi_dismiss"
             }
             rightItem.style = .plain
             rightItem.tintColor = .defaultFont

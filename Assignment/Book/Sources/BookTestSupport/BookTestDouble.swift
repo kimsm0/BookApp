@@ -13,10 +13,24 @@ import BookDataModel
 public enum BookTestMode{
     case main
     case detail
+    case pdf
+    case detailMore
+    
+    public var url: String {
+        switch self{
+        case .detail,.main:
+            return ""
+        case .pdf:
+            return BookTestDouble.pdfURL
+        case .detailMore:
+            return BookTestDouble.detailURL
+        }
+    }
 }
 public struct BookTestDouble {
     public static var testMode: BookTestMode = .main
     
+    public static let searchKeyword = "test"
     public static let isbn13 = "9781617294136"
     public static let pdfURL = "https://itbook.store/files/9781617294136/chapter5.pdf"
     public static let detailURL = "https://itbook.store/books/9781617294136"
@@ -64,6 +78,15 @@ public struct BookTestDouble {
     public static func getBookTotalDic(_ with: Int) -> [String: Any] {
         do {
             let dic = try getBookTotalDTO(with).encode()
+            return dic
+        }catch {
+            return [:]
+        }
+    }
+    
+    public static func getBookDetailDic(_ with: Int) -> [String: Any] {
+        do {
+            let dic = try getBookDetailDTO(with).encode()
             return dic
         }catch {
             return [:]

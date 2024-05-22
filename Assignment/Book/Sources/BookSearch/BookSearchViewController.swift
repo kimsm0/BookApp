@@ -56,6 +56,7 @@ class BookSearchViewController: UIViewController, BookSearchPresentable, BookSea
     private let guideLabel: UILabel = {
         let label = UILabel()
         label.text = "상단 검색필드를 이용하여 \n책을 검색해보세요."
+        label.accessibilityIdentifier = "bookSearch_guide"
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = .semibold16
