@@ -28,10 +28,10 @@ send를 Wrapping한 Custom Publisher 클래스와, UI컴포넌트의 이벤트�
 
 💡 
 - BookSearch 
-- AppRoot리블렛에서 BookSearch을 하위로 attach 하여 시작됩니다. RootBuilder에서 BookSearch 리블렛에서 필요한 repository를 주입받는다. 
-- BookSearch 화면에서 cell을 탭하면 BookDetail을 child 로 attach한다. 
+- AppRoot리블렛에서 BookSearch을 하위로 attach 하여 시작됩니다. RootBuilder에서 BookSearch 리블렛에서 필요한 repository를 주입받습니다.
+- BookSearch 화면에서 cell을 탭하면 BookDetail을 child 로 attach합니다. 
 - BookDetail에서는 API 통신을 위한 repository를 주입받고, 선택한 항목의 id(isbn13)를 build메소드로 전달합니다.
-- BookDetail 상세화면에서는 하단 PDF보기, 더보기 버튼을 탭하면 WebView 리블렛을 child 로 attach한다.
+- BookDetail 상세화면에서는 하단 PDF보기, 더보기 버튼을 탭하면 WebView 리블렛을 child 로 attach합니다. 
 - WebView 리블렛은 WebViewType 데이터를 전달 받으며, 이 데이터에는 url과, 네비게이션 타이틀을 위한 정보가 담겨있습니다.
 
 👉 SceneDelegate에서 UITESTING Config일 경우에는, BookTestDouble의 testMode에 맞는 리블렛을 바로 연결하기 위해, AppRootTest 리블렛으로 연결되어 있습니다.
@@ -45,9 +45,19 @@ send를 Wrapping한 Custom Publisher 클래스와, UI컴포넌트의 이벤트�
 
 
 💡 
-- Entity: 프로젝트 내부에서 사용될 데이터 모델입니다. (DTO를 기반으로 생성됨)
+- Entity: 프로젝트 내부에서 사용될 데이터 모델입니다. (DTO를 기반으로 생성)
 - DTO: 외부에서 전달 받은 데이터 모델입니다.
 - 외부 데이터 모델의 영향도를 줄이기 위해 데이터 모델 구분하였습니다. 
+
+⚡️Trouble Shooting 
+BookSearch 화면에서 상단 SearchView에 shadow 효과를 넣었는데 Optimization Opportunities warnning이 발생하였습니다. 
+렌더링 비용이 많이들고 있어, shadowPath를 설정하여 그림자 경로를 명시적으로 지정,그림자를 동적으로 계산하지 않도록 하여 렌더링 성능을 개선할 수 있습니다. 
+
+TableView Cell 안에서 이미지를 비동기로 로드하는데, 잘못된 이미지가 로드되거나 스크롤을 빨리하면 이미지 위치가 변경되는 등의 이슈가 발생하였습니다. 
+이를 해결하기 위해 Cell 안에서 이미지 url 값을 구분값으로 갖고, 이미지 로드가 완료된 시점에 url 값을 확인하여 설정할 수 있도록 로직을 추가하였습니다. 
+
+Unit Test 진행시에 비동기 이벤트 처리 관련하여 임의의 timeout을 설정해두었습니다. 
+combine-schedulers 서드파티 라이브러리를 사용한다면, 테스트 진행시에 immediate 스케줄러를 주입하여 wait 없이 진행해볼 수 있을거 같습니다. 
 
 
 💡 TEST
@@ -60,15 +70,12 @@ AppURLProtocol 클래스를 통해 Mock Data를 리턴하도록 되어있습니�
 - API를 호출하는 repository의 경우, 공통으로 사용하기에 각 리블렛의 테스트 타겟이 아닌 BookTestSupport 모듈 안에 포함되어 있습니다. 
 
 
-
-
 🍏 Test
 - Scheme을 Test 하고자 하는 모듈로 변경 후 Test 진행하시면 됩니다. (Command + U)
 - BookTestDouble에 정의된 testMode를 변경하여 원하는 리블렛을 Root에 바로 attach하여 빠르게 확인할 수 있습니다. 
 
 🍎 Test Data
 - 책을 검색하였을 때, pdf 데이터가 없는 경우가 많이 있는것으로 확인됩니다. pdf 데이터를 확인하시고자 한다면 
-isbn13 값인 9781617294136 또는 Securing DevOps 으로 검색을 진행하시면 상세화면에서 pdf를 확인하실 수 있습니다. 
-
+isbn13 값인 9781617294136 또는 Securing DevOps 으로 검색을 진행하시면 상세화면에서 pdf를 확인하실 수 있습니다.
 
 
