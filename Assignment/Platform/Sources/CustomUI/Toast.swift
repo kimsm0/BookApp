@@ -10,7 +10,7 @@
 import UIKit
 import Extensions
 
-public class Toast {
+public final class Toast {
     public static func showToast(message: String, subMessage:String = "") {
         DispatchQueue.main.async {
             if let window = UIApplication.shared.windows.first {

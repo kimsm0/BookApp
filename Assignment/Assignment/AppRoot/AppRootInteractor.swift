@@ -24,6 +24,7 @@ protocol AppRootParentInteractable {
 /*
  Interactor에서 구현해야할 프로토콜
  다른 레이어에서 접근시 사용.
+ 하위 리블렛이 있다면, 하위 리블렛의 상위 리블렛 프로토콜을 채택하여야 한다. 
  */
 protocol AppRootInteractable: Interactable, BookSearchParentInteractable {
     var router: AppRootRouting? { get set }

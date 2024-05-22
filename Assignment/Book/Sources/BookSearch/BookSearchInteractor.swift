@@ -11,6 +11,7 @@ import Combine
 import ArchitectureModule
 import BookDataModel
 import BookRepository
+import BookDetail
 
 // MARK: Interactor에서 구현해야할 프로토콜
 // Presenter -> Interactor
@@ -29,8 +30,9 @@ public protocol BookSearchParentInteractable: AnyObject {
 /*
  Interactor에서 구현해야할 프로토콜
  다른 레이어에서 접근시 사용.
+ 하위 리블렛이 있다면, 하위 리블렛의 상위 리블렛 프로토콜을 채택하여야 한다. 
  */
-protocol BookSearchInteractable: Interactable {
+protocol BookSearchInteractable: Interactable, BookDetailParentInteractable {
     var router: BookSearchRouting? { get set }
     var parentInteractor: BookSearchParentInteractable? { get set }
 }
@@ -90,6 +92,7 @@ class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInterac
 extension BookSearchInteractor: BookSearchInteractableForPresenter {
     func searchBooks(_ query: String){
         self.query = query
+        self.curPage = 1
         if !query.isEmpty {
             dependency.bookRepository.searchBooks(curPage: curPage, query: query)
         }else {
@@ -103,7 +106,7 @@ extension BookSearchInteractor: BookSearchInteractableForPresenter {
             let query
         {
             curPage += 1
-            searchBooks(query)
+            dependency.bookRepository.searchBooks(curPage: curPage, query: query)
         }
     }
     
@@ -116,7 +119,12 @@ extension BookSearchInteractor: BookSearchInteractableForPresenter {
     }
 }
 
-
+//하위리블렛 interactor에서 parentInteractor로 호출되는 부분
+extension BookSearchInteractor {
+    func closeBookDetail() {
+        router?.detachBookDetail()
+    }
+}
 
 
 

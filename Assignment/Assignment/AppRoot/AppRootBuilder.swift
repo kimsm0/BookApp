@@ -27,6 +27,8 @@ final class AppRootDependencyBox: DependencyBox<AppRootDependency>, BookSearchDe
     
     override init(dependency: AppRootDependency) {
         let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10.0
+        config.timeoutIntervalForResource = 30.0
         let network = NetworkImp(session: URLSession(configuration: config))
         
         self.bookRepository = BookRepository(network: network, 

@@ -3,7 +3,7 @@
  @date 5/20/24
  @writer kimsoomin
  @brief
- - Coordinator에서 UIKit을 import하지 않기 위해, NavigationControllerable 클래스를 생성하여 접근한다.
+ - Router에서 UIKit을 import하지 않기 위해, NavigationControllerable 클래스를 생성하여 접근한다.
  - UIViewController에서는 present/push 등의 메서드가 제공되지 않아 편의성을 위해 extension으로 확장하여 정의함.
  @update history
  -

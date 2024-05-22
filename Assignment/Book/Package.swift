@@ -16,9 +16,13 @@ let package = Package(
         .library(
             name: "BookRepository",
             targets: ["BookRepository"]),
+        .library(
+            name: "BookDetail",
+            targets: ["BookDetail"]),
     ],
     dependencies: [
         .package(path: "../Platform"),
+        .package(path: "../WebView"),
     ],
     targets: [
         .target(
@@ -30,7 +34,20 @@ let package = Package(
                 .product(name: "Storage", package: "Platform"),
                 "BookRepository",
                 "BookDataModel",
-            
+                "BookDetail"            
+            ]
+        ),
+        .target(
+            name: "BookDetail",
+            dependencies: [
+                .product(name: "ArchitectureModule", package: "Platform"),
+                .product(name: "Extensions", package: "Platform"),
+                .product(name: "CustomUI", package: "Platform"),
+                .product(name: "Storage", package: "Platform"),
+                .product(name: "WebView", package: "WebView"),
+                "BookRepository",
+                "BookDataModel", 
+                
             ]
         ),
         .target(
