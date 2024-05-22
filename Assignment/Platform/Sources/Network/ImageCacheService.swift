@@ -88,9 +88,16 @@ public class ImageCacheService: ImageCacheServiceType{
     }
 }
 
-public class StubimageCacheService: ImageCacheServiceType {
+public final class ImageCacheServiceMock: ImageCacheServiceType {
+    
+    public init(){
+        
+    }
     public func image(for key: String) -> AnyPublisher<(UIImage?,String), Never> {
-        Empty().eraseToAnyPublisher()
+        if key == "" {
+            return Just((nil, "")).eraseToAnyPublisher()
+        }
+        return Just((UIImage(systemName: "photo"), key)).eraseToAnyPublisher()
     }
 }
 

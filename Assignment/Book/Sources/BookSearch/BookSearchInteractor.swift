@@ -43,7 +43,7 @@ protocol BookSearchInteractorDependency {
     var mainQueue: DispatchQueue { get }
 }
 
-class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInteractable {
+final class BookSearchInteractor: Interactor<BookSearchPresentable>, BookSearchInteractable {
     
     weak var router: BookSearchRouting?
     weak var parentInteractor: BookSearchParentInteractable?
