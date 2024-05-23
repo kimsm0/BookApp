@@ -50,11 +50,15 @@ send를 Wrapping한 Custom Publisher 클래스와, UI컴포넌트의 이벤트�
 - 외부 데이터 모델의 영향도를 줄이기 위해 데이터 모델 구분하였습니다. 
 
 ⚡️Trouble Shooting 
+
 BookSearch 화면에서 상단 SearchView에 shadow 효과를 넣었는데 Optimization Opportunities warnning이 발생하였습니다. 
 렌더링 비용이 많이들고 있어, shadowPath를 설정하여 그림자 경로를 명시적으로 지정,그림자를 동적으로 계산하지 않도록 하여 렌더링 성능을 개선할 수 있습니다. 
 
-TableView Cell 안에서 이미지를 비동기로 로드하는데, 잘못된 이미지가 로드되거나 스크롤을 빨리하면 이미지 위치가 변경되는 등의 이슈가 발생하였습니다. 
+BookSearch TableView Cell 안에서 이미지를 비동기로 로드하는데, 잘못된 이미지가 로드되거나 스크롤을 빨리하면 이미지 위치가 변경되는 등의 이슈가 발생하였습니다. 
 이를 해결하기 위해 Cell 안에서 이미지 url 값을 구분값으로 갖고, 이미지 로드가 완료된 시점에 url 값을 확인하여 설정할 수 있도록 로직을 추가하였습니다. 
+
+BookSearch TableView Cell 안에 StackView안에 동적으로 높이가 조정되는 label로 인해 height ambiguous warnning이 발생하였습니다. 
+Hugging Priority, Compression Resistance Priority를 설정함으로써 warnning을 제거할 수 있었습니다.
 
 Unit Test 진행시에 비동기 이벤트 처리 관련하여 임의의 timeout을 설정해두었습니다. 
 combine-schedulers 서드파티 라이브러리를 사용한다면, 테스트 진행시에 immediate 스케줄러를 주입하여 wait 없이 진행해볼 수 있을거 같습니다. 
