@@ -43,7 +43,7 @@ protocol BookDetailInteractorDependency {
     var bookId: String { get }
 }
 
-class BookDetailInteractor: Interactor<BookDetailPresentable>, BookDetailInteractable {
+final class BookDetailInteractor: Interactor<BookDetailPresentable>, BookDetailInteractable {
     
     weak var router: BookDetailRouting?
     weak var parentInteractor: BookDetailParentInteractable?

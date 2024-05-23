@@ -29,7 +29,7 @@ protocol BookDetailPresentable: Presentable {
     func showToast(message: String)
 }
 
-class BookDetailViewController: UIViewController, BookDetailPresentable, BookDetailViewControllable {
+final class BookDetailViewController: UIViewController, BookDetailPresentable, BookDetailViewControllable {
             
     weak var interactor: BookDetailInteractableForPresenter?
     private var subscriptions = Set<AnyCancellable>()

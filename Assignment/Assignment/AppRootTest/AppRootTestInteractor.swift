@@ -32,7 +32,7 @@ protocol AppRootTestInteractable: Interactable, BookSearchParentInteractable, We
     var router: AppRootTestRouting? { get set }
 }
 
-class AppRootTestInteractor: Interactor<AppRootPresentable>, AppRootTestInteractable {
+final class AppRootTestInteractor: Interactor<AppRootPresentable>, AppRootTestInteractable {
     
     weak var router: AppRootTestRouting?
     

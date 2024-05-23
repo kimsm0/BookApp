@@ -25,7 +25,7 @@ protocol AppRootPresentable: Presentable {
     var interactor: AppRootInteractable? { get set }    
 }
 
-class AppRootViewController: UINavigationController, AppRootPresentable, AppRootViewControllable {
+final class AppRootViewController: UINavigationController, AppRootPresentable, AppRootViewControllable {
     
     weak var interactor: AppRootInteractable?
     

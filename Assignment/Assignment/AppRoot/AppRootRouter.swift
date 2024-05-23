@@ -17,7 +17,7 @@ protocol AppRootRouting: Routing {
     func attachBookSearch()
 }
 
-class AppRootRouter: Router<AppRootInteractable, AppRootViewControllable> {
+final class AppRootRouter: Router<AppRootInteractable, AppRootViewControllable> {
     
     private var bookSearchBuildable: BookSearchBuildable
     private var bookSearchRouting: Routing?

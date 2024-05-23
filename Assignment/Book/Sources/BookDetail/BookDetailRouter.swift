@@ -17,7 +17,7 @@ protocol BookDetailRouting: Routing {
     func detachWebView()
 }
 
-class BookDetailRouter: Router<BookDetailInteractable, BookDetailViewControllable>, AdaptiveInteractionGestureDelegate {
+final class BookDetailRouter: Router<BookDetailInteractable, BookDetailViewControllable>, AdaptiveInteractionGestureDelegate {
     
     private var webViewBuildable: WebViewBuildable
     private var webViewRouting: Routing?
@@ -42,14 +42,14 @@ extension BookDetailRouter: BookDetailRouting {
             
             let router = webViewBuildable.build(parentInteractor: interactable, type: type)
             webViewRouting = router
-            viewController.uiviewController.navigationController?.pushViewController(router.viewController.uiviewController, animated: true)
+            viewController.pushViewController(router.viewController, animated: true)
             attach(child: router)
         }
     }
     
     func detachWebView() {
         if let router = webViewRouting {
-            viewController.uiviewController.navigationController?.popViewController(animated: true)
+            viewController.popViewController(animated: true)            
             detach(child: router)
             webViewRouting = nil
         }

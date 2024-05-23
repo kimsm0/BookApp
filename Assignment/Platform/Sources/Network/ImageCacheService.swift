@@ -17,7 +17,7 @@ public protocol ImageCacheServiceType {
     func image(for key: String) -> AnyPublisher<(UIImage?,String), Never>
 }
 
-public class ImageCacheService: ImageCacheServiceType{
+public final class ImageCacheService: ImageCacheServiceType{
     let memoryStorage: MemoryStorage
     let diskStorage: DiskStorage
     

@@ -4,7 +4,7 @@
 import Foundation
 import ArchitectureModule
 
-class BookSearchRouterMock: Router<BookSearchInteractable, BookSearchViewControllable>{
+final class BookSearchRouterMock: Router<BookSearchInteractable, BookSearchViewControllable>{
     
     public var attachBookDetailCallCount = 0
     public var detachBookDetailCallCount  = 0

@@ -30,7 +30,7 @@ protocol AppRootInteractable: Interactable, BookSearchParentInteractable {
     var router: AppRootRouting? { get set }
 }
 
-class AppRootInteractor: Interactor<AppRootPresentable>, AppRootInteractable {
+final class AppRootInteractor: Interactor<AppRootPresentable>, AppRootInteractable {
     
     weak var router: AppRootRouting?
     

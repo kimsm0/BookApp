@@ -18,7 +18,7 @@ protocol BookSearchRouting: Routing {
     func detachBookDetail()
 }
 
-class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllable>,
+final class BookSearchRouter: Router<BookSearchInteractable, BookSearchViewControllable>,
                         AdaptiveInteractionGestureDelegate{
     
     private var bookDetailBuildable: BookDetailBuildable
@@ -51,11 +51,8 @@ extension BookSearchRouter: BookSearchRouting {
             
             let router = bookDetailBuildable.build(parentInteractor: interactable, bookId: id)
             bookDetailRouting = router
-                              
-            DispatchQueue.main.async {
-                self.viewController.uiviewController.navigationController?.pushViewController(router.viewController.uiviewController, animated: true)
-            }            
-    
+            self.viewController.pushViewController(router.viewController, animated: true)
+            
             attach(child: router)
         }
     }

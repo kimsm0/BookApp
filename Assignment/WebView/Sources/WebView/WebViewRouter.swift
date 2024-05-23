@@ -17,7 +17,7 @@ protocol WebViewRouting: Routing {
     
 }
 
-class WebViewRouter: Router<WebViewInteractable, WebViewViewControllable> {
+final class WebViewRouter: Router<WebViewInteractable, WebViewViewControllable> {
     
     override init(interactor: WebViewInteractable,
                   viewController: WebViewViewControllable

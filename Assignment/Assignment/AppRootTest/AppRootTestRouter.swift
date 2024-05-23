@@ -22,7 +22,7 @@ protocol AppRootTestRouting: Routing {
     func attachWebView()
 }
 
-class AppRootTestRouter: Router<AppRootTestInteractable, AppRootViewControllable> {
+final class AppRootTestRouter: Router<AppRootTestInteractable, AppRootViewControllable> {
     
     private var bookSearchBuildable: BookSearchBuildable
     private var bookSearchRouting: Routing?

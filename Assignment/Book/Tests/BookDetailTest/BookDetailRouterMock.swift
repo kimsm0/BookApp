@@ -12,7 +12,7 @@ import Foundation
 import ArchitectureModule
 import WebView
 
-class BookDetailRouterMock: Router<BookDetailInteractable, BookDetailViewControllable> {
+final class BookDetailRouterMock: Router<BookDetailInteractable, BookDetailViewControllable> {
           
     var attachWebViewCount = 0
     var detachWebViewCount = 0

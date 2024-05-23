@@ -30,7 +30,7 @@ protocol BookSearchPresentable: Presentable {
     func reset()
 }
 
-class BookSearchViewController: UIViewController, BookSearchPresentable, BookSearchViewControllable {
+final class BookSearchViewController: UIViewController, BookSearchPresentable, BookSearchViewControllable {
     
     private var dataSource: [BookEntity] = []
     private var subscriptions = Set<AnyCancellable>()

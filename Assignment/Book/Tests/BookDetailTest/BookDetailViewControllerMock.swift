@@ -13,7 +13,7 @@ import CustomUI
 import Combine
 
 @testable import BookDetail
-class BookDetailViewControllerMock: UIViewController, BookDetailPresentable, BookDetailViewControllable {
+final class BookDetailViewControllerMock: UIViewController, BookDetailPresentable, BookDetailViewControllable {
     
     weak var interactor: BookDetailInteractableForPresenter?
     
