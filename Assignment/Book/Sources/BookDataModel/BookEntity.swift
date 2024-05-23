@@ -65,8 +65,8 @@ public struct BookDetailEntity {
     public let desc: String
     public let price: String
     public let image: String
-    public let url: String
-    public let pdf: PDFEntity?
+    public let url: String    
+    public let pdf: PDFEntity
     
     public init(error: String,
                 title: String,

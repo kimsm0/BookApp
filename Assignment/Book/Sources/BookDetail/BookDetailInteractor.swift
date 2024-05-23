@@ -100,9 +100,9 @@ extension BookDetailInteractor: BookDetailInteractableForPresenter {
     }
         
     func didTapPdfButton() {
-        if let url = dependency.bookRepository.bookDetail.value?.pdf?.chapter5, !url.isEmpty{
+        if let url = dependency.bookRepository.bookDetail.value?.pdf.chapter5, !url.isEmpty{
             router?.attachWebView(type: WebViewType(contentType: .pdf, url: url))
-        }else if let url = dependency.bookRepository.bookDetail.value?.pdf?.chapter2, !url.isEmpty{
+        }else if let url = dependency.bookRepository.bookDetail.value?.pdf.chapter2, !url.isEmpty{
             router?.attachWebView(type: WebViewType(contentType: .pdf, url: url))
         }else{
             presenter.showAlert(message: "PDF가 제공되지 않습니다.")

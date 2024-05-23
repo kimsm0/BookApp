@@ -12,6 +12,7 @@ import Extensions
 import CustomUI
 import WebKit
 import Common
+import WebViewCommon
 
 // MARK: ViewController에서 구현해야할 프로토콜들
 // Router -> ViewController
@@ -28,13 +29,7 @@ protocol WebViewPresentable: Presentable {
 }
 
 
-class commonProcessPool {
-    static let instance = commonProcessPool()
-    let processPool = WKProcessPool()
-    func getProcessPool() -> WKProcessPool{
-        return processPool
-    }
-}
+
 
 final class WebViewController: UIViewController, WebViewPresentable, WebViewViewControllable {
 
@@ -60,7 +55,7 @@ final class WebViewController: UIViewController, WebViewPresentable, WebViewView
         let userContentController = WKUserContentController()
         
         config.userContentController = userContentController
-        config.processPool = commonProcessPool.instance.getProcessPool()
+        config.processPool = CommonProcessPool.instance.getProcessPool()
         wkWebView = WKWebView(frame: .zero, configuration: config)
         wkWebView?.accessibilityIdentifier = "webviewController_webview"
         wkWebView?.translatesAutoresizingMaskIntoConstraints = false
@@ -191,21 +186,11 @@ extension WebViewController: WKNavigationDelegate{
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (Bool) -> Void) {
         
-        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert);
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) {
-            _ in completionHandler(false)
-        }
-        let okAction = UIAlertAction(title: "확인", style: .default) {
-            _ in completionHandler(true)
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
-        }
+        self.showAlert(message: message, confirmTitle: "확인",cancelTitle: "취소", confirmAction: {
+            completionHandler(true)
+        }, cancelAction: {
+            completionHandler(false)
+        })
     }
     
     func webView(_ webView: WKWebView,
@@ -213,16 +198,7 @@ extension WebViewController: WKNavigationDelegate{
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Swift.Void) {
 
-        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert);
-
-        let cancelAction = UIAlertAction(title: "확인", style: .cancel) {
-            _ in completionHandler()
-        }
-
-        alertController.addAction(cancelAction)
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
-        }
+        self.showAlert(message: message, confirmTitle: "확인", confirmAction: completionHandler)
     }
 
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView){

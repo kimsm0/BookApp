@@ -48,6 +48,7 @@ let package = Package(
                 .product(name: "CustomUI", package: "Platform"),
                 .product(name: "Storage", package: "Platform"),
                 .product(name: "WebView", package: "WebView"),
+                .product(name: "WebViewCommon", package: "WebView"),
                 "BookRepository",
                 "BookDataModel", 
                 

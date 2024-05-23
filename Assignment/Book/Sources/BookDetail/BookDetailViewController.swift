@@ -13,6 +13,7 @@ import ArchitectureModule
 import Extensions
 import BookDataModel
 import CustomUI
+import PDFKit
 
 // MARK: ViewController에서 구현해야할 프로토콜들
 // Router -> ViewController
@@ -29,10 +30,10 @@ protocol BookDetailPresentable: Presentable {
 }
 
 class BookDetailViewController: UIViewController, BookDetailPresentable, BookDetailViewControllable {
-    
+            
     weak var interactor: BookDetailInteractableForPresenter?
     private var subscriptions = Set<AnyCancellable>()
-    
+        
     // MARK:UI
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -46,7 +47,7 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.backgroundColor = .clear
-        stackView.spacing = 5
+        stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -145,6 +146,15 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private let pdfView: PDFView = {
+        let pdfView = PDFView()
+        pdfView.displayDirection = .horizontal
+        pdfView.autoScales = false
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        return pdfView
+    }()
             
     private let pdfButton: UIButton = {
         let btn = UIButton()
@@ -207,6 +217,8 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(isbnLabel)
         stackView.addArrangedSubview(priceLabel)
+        stackView.setCustomSpacing(14, after: priceLabel)
+        stackView.addArrangedSubview(pdfView)
         
         NSLayoutConstraint.activate([
             
@@ -238,7 +250,6 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
             
             detailImageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             detailImageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            //detailImageView.heightAnchor.constraint(equalTo: view.widthAnchor),
             
             titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
@@ -268,15 +279,18 @@ class BookDetailViewController: UIViewController, BookDetailPresentable, BookDet
             
             priceLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            
+            pdfView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            pdfView.heightAnchor.constraint(equalToConstant: 180),
         ])
-        
+       
         detailImageView.layoutUpdate()
     }
     
     func attribute(){
         self.view.backgroundColor = .defaultBg
     }
-    
+        
     func bind(){
         pdfButton.throttleTapPublisher()
             .receive(on: DispatchQueue.main)
@@ -302,22 +316,39 @@ extension BookDetailViewController {
             }.store(in: &subscriptions)
         
         titleLabel.text = book.title
-        subTitleLabel.text = book.subtitle        
+        subTitleLabel.text = book.subtitle
         ratingView.setScore(Float(book.rating) ?? 0.0)
         authorLabel.text = book.authors
         publisherYearPageLabel.text = "\(book.publisher) / YEAR: \(book.year) / PAGE: \(book.pages)"
         descriptionLabel.text = book.desc
         isbnLabel.text = "\(book.isbn10) / \(book.isbn13)"
         priceLabel.text = book.price
+                
+        if !book.pdf.chapter5.isEmpty,  let url = URL(string: book.pdf.chapter5) {
+            pdfLoad(pdfURL: url)
+        }else if !book.pdf.chapter2.isEmpty,  let url = URL(string: book.pdf.chapter2) {
+            pdfLoad(pdfURL: url)
+        }else {
+            pdfView.isHidden = true
+            pdfButton.setTitle("지원되는 PDF가 없습니다.", for: .normal)
+            pdfButton.setDisabled()
+        }
     }
     
+    func pdfLoad(pdfURL: URL){
+        if let document = PDFDocument(url: pdfURL) {
+            self.pdfView.document = document
+            pdfView.scaleFactor = 0.1
+        }
+    }
+}
+
+extension BookDetailViewController {
     func showAlert(message: String) {
-        self.showAlert(message: message, confirmTitle: "확인")
+        showAlert(message: message, confirmTitle: "확인")
     }
     
     func showToast(message: String) {
         Toast.showToast(message: message)
     }
 }
-
-

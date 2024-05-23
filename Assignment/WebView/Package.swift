@@ -10,6 +10,9 @@ let package = Package(
         .library(
             name: "WebView",
             targets: ["WebView"]),
+        .library(
+            name: "WebViewCommon",
+            targets: ["WebViewCommon"]),
     ],
     dependencies: [
         .package(path: "../Platform"),        
@@ -18,8 +21,15 @@ let package = Package(
         .target(
             name: "WebView",
             dependencies: [
+                "WebViewCommon",                
                 .product(name: "Extensions", package: "Platform"),
                 .product(name: "Common", package: "Platform")                
+            ]
+        ),
+        .target(
+            name: "WebViewCommon",
+            dependencies: [
+                
             ]
         ),
     ]
