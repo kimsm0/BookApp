@@ -1,12 +1,13 @@
 /**
- @class
+ @class BookSearchBuilder
  @date
  @writer kimsoomin
  @brief
+ - AppRoot에서 하위 리블렛으로 연결된 책 검색 화면 리블렛.
+ - BookDetail 리블렛을 하위 리블렛으로 연결한다.
  @update history
  -
  */
-
 import Foundation
 import ArchitectureModule
 import BookRepository

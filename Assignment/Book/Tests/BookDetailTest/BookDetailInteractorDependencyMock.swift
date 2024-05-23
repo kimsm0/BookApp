@@ -1,6 +1,6 @@
 /**
- @class TodoMainInteractorDepengencyMock
- @date BookDetailInteractorDependencyMock
+ @class BookDetailInteractorDependencyMock
+ @date 
  @writer kimsoomin
  @brief
  @update history

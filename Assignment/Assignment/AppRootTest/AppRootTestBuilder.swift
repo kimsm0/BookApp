@@ -1,8 +1,9 @@
 /**
- @class
+ @class AppRootTestBuildable
  @date
  @writer kimsoomin
  @brief
+ - TestMode에 맞는 리블렛을 바로 Root에 attach 하기 위한 AppRootTest 리블렛.
  @update history
  -
  */

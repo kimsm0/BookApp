@@ -1,10 +1,13 @@
-//
-//  File.swift
-//  newsApp
-//
-//  Created by kimsoomin_mac2022 on 5/21/24.
-//
-
+/**
+ @class API
+ @date 05/21/24
+ @writer kimsoomin
+ @brief
+ - UserDefaults에 저장된 값으로 서버 모드를 구분.
+ - UITESTING 진행시에는 로컬 서버로 테스트 데이터 리턴하도록 한다. 
+ @update history
+ -
+ */
 import Foundation
 import Storage
 

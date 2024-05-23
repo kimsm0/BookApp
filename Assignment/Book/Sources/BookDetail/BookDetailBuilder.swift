@@ -1,8 +1,10 @@
 /**
- @class
+ @class BookDetailBuilder
  @date
  @writer kimsoomin
  @brief
+ - BookSearch 화면에서 검색 결과 cell을 탭하면 이동되는 상세화면 리블렛.
+ - WebView 리블렛을 하위 리블렛으로 연결한다. 
  @update history
  -
  */

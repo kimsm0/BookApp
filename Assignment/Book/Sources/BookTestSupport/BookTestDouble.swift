@@ -11,14 +11,14 @@ import Extensions
 import BookDataModel
 
 public enum BookTestMode{
-    case main
+    case search
     case detail
     case pdf
     case detailMore
     
     public var url: String {
         switch self{
-        case .detail,.main:
+        case .detail, .search:
             return ""
         case .pdf:
             return BookTestDouble.pdfURL
@@ -28,7 +28,7 @@ public enum BookTestMode{
     }
 }
 public struct BookTestDouble {
-    public static var testMode: BookTestMode = .main
+    public static var testMode: BookTestMode = .search
     
     public static let searchKeyword = "test"
     public static let isbn13 = "9781617294136"

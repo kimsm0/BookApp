@@ -1,5 +1,5 @@
 /**
- @class TodoMainInteractorDepengencyMock
+ @class BookSearchInteractorDependencyMock
  @date
  @writer kimsoomin
  @brief

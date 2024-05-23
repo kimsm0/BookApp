@@ -1,4 +1,12 @@
-
+/**
+ @class AppURLProtocol
+ @date 05/23/24
+ @writer kimsoomin
+ @brief
+ - UITESTING 진행시에는 로컬 서버 연결되는데, path를 캐치하여 각 케이스에 맞는 테스트 데이터를 리턴한다.
+ @update history
+ -
+ */
 import Foundation
 import BookTestSupport
 
@@ -48,18 +56,17 @@ enum MockSessionError: Error {
     case notSupported
 }
 
-// TODO:
 func setupURLProtocol(){
     let bookTotal = BookTestDouble.getBookTotalDic(1)
     let bookTotalData = try! JSONSerialization.data(withJSONObject: bookTotal, options: [])
     
     let bookDetail = BookTestDouble.getBookDetailDic(1)
     let bookDetailData = try! JSONSerialization.data(withJSONObject: bookDetail, options: [])
-    
-    //https://api.itbook.store/1.0/
+        
     AppURLProtocol.successMock = [
         "/1.0/search/\(BookTestDouble.searchKeyword)/1": (200, bookTotalData),
         "/1.0/books/\(BookTestDouble.isbn13)": (200, bookDetailData),
         "/books/\(BookTestDouble.isbn13)": (200, bookDetailData),
+        "/search/\(BookTestDouble.searchKeyword)/1": (200, bookTotalData),
     ]
 }

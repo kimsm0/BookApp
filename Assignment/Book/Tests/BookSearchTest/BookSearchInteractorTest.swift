@@ -3,6 +3,7 @@
  @date
  @writer kimsoomin
  @brief
+ - 책 검색시에는 curPage 값으로 케이스를 구분한다. (2 == loadMore케이스, 1 == success(default case), -1 == decoding error, -2 == error)
  @update history
  -
  */
@@ -23,6 +24,11 @@ final class BookSearchInteractorTest: XCTestCase {
     
     private let testCount = 1
     private var subscriptions = Set<AnyCancellable>()
+    
+    private let search_success_case = 1
+    private let search_decoding_error_case = -1
+    private let search_fail_case = -2
+    private let search_loadmore_case = 2
     
     private var bookRepositoryMock: BookRepositoryMock {
         dependency.bookRepository as! BookRepositoryMock
@@ -58,7 +64,7 @@ final class BookSearchInteractorTest: XCTestCase {
         //when
         sut.start()
         sut.searchBooks("test")
-        bookRepositoryMock.searchBooks(curPage: 2, query: "test")
+        bookRepositoryMock.searchBooks(curPage: search_loadmore_case, query: "test")
         
         bookRepositoryMock.bookList
             .receive(on: DispatchQueue.main)
@@ -113,7 +119,7 @@ final class BookSearchInteractorTest: XCTestCase {
         
         //when
         dependency.bookRepository
-            .searchBooks(curPage: -1, query: "")
+            .searchBooks(curPage: search_decoding_error_case, query: "")
         
         bookRepositoryMock.resultError
             .receive(on: DispatchQueue.main)
@@ -138,7 +144,7 @@ final class BookSearchInteractorTest: XCTestCase {
         
         //when
         dependency.bookRepository
-            .searchBooks(curPage: -2, query: "")
+            .searchBooks(curPage: search_fail_case, query: "")
         
         bookRepositoryMock.resultError
             .receive(on: DispatchQueue.main)

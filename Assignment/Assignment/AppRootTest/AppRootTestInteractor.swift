@@ -44,7 +44,7 @@ final class AppRootTestInteractor: Interactor<AppRootPresentable>, AppRootTestIn
     override func start() {
         #if UITESTING
         switch BookTestDouble.testMode {
-        case.main:
+        case .search:
             router?.attachBookSearch()
         case .detail:
             router?.attachBookDetail()

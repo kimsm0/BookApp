@@ -4,6 +4,7 @@
  @writer kimsoomin
  @brief
  - Book 리블렛의 Network API 호출 클래스
+ - 책을 검색하거니, 책 상세 조회, 이미지 로드를 진행한다. 
  @update history
  -
  */

@@ -1,10 +1,12 @@
-//
-//  SceneDelegate.swift
-//  Assignment
-//
-//  Created by kimsoomin_mac2022 on 5/20/24.
-//
-
+/**
+ @class SceneDelegate
+ @date 5/20/2
+ @writer kimsoomin
+ @brief
+ - Root리블렛을 attach하여 앱의 시작점을 연결한다. 
+ @update history
+ -
+ */
 import UIKit
 import ArchitectureModule
 import BookTestSupport
@@ -20,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: scene)
         
         #if UITESTING
-        BookTestDouble.testMode = .detail
+        BookTestDouble.testMode = .search
         let rootRouter = AppRootTestBuilder(dependency: AppComponent()).build()
         self.launchRouter = rootRouter
         window?.rootViewController = rootRouter.viewController.uiviewController

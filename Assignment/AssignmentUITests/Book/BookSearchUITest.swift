@@ -1,5 +1,5 @@
 /**
- @class TodoMainUITest
+ @class BookSearchUITest
  @date 5/5/24
  @writer kimsoomin
  @brief

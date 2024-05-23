@@ -1,10 +1,11 @@
-//
 /**
  @class BookRepository
  @date 5/22/24
  @writer kimsoomin
  @brief
  - 테스트를 위한 Mock클래스
+ - 책 검색시에는 curPage 값으로 케이스를 구분한다. (2 == loadMore케이스, 0 == success, -1 == fail)
+ - 책 상세 조회시에는 id 값으로 케이스를 구분한다. ( empty == fail, isbn13 == success, etc == empty)
  @update history
  -
  */
@@ -52,10 +53,8 @@ public final class BookRepositoryMock: BookRepositoryType {
     }
 }
 
-public extension BookRepositoryMock {
-    
+public extension BookRepositoryMock {        
     func searchBooks(curPage: Int, query: String) {
-        
         if curPage == 2 { //loadmore
             let loadMoreItem = BookTestDouble.getBookDTOs(testCount+1)
             var preValue = bookListSubject.value

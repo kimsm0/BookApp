@@ -3,6 +3,7 @@
  @date
  @writer kimsoomin
  @brief
+ - 책 상세 조회시에는 id 값으로 케이스를 구분한다. ( empty == fail, isbn13 == success, etc == empty)
  @update history
  -
  */
@@ -15,7 +16,7 @@ import Combine
 @testable import BookDetail
 
 final class BookDetailInteractorTest: XCTestCase {
-
+    
     private var sut: BookDetailInteractor!
     private var router: BookDetailRouterMock!
     private var presenter: BookDetailViewControllerMock!
@@ -24,6 +25,10 @@ final class BookDetailInteractorTest: XCTestCase {
     private let testCount = 1
     private var subscriptions = Set<AnyCancellable>()
     
+    private let detail_result_empty = "test"
+    private let detail_result_success = BookTestDouble.isbn13
+    private let detail_result_fail = ""
+    
     private var bookRepositoryMock: BookRepositoryMock {
         dependency.bookRepository as! BookRepositoryMock
     }
@@ -31,7 +36,7 @@ final class BookDetailInteractorTest: XCTestCase {
     override func setUpWithError() throws {
         super.setUp()
 
-        self.dependency = BookDetailInteractorDependencyMock(testCount: testCount, bookId: BookTestDouble.isbn13) //BookTestDouble.isbn13 = success case
+        self.dependency = BookDetailInteractorDependencyMock(testCount: testCount, bookId: detail_result_success)
         self.presenter = BookDetailViewControllerMock()
         
         let interactor = BookDetailInteractor(presenter: self.presenter,
@@ -103,7 +108,7 @@ final class BookDetailInteractorTest: XCTestCase {
             }.store(in: &subscriptions)
         
         //when
-        bookRepositoryMock.getBookDetail(id: "")
+        bookRepositoryMock.getBookDetail(id: detail_result_fail)
                      
         wait(for: [expectation], timeout: 2)
               
@@ -130,7 +135,7 @@ final class BookDetailInteractorTest: XCTestCase {
             }.store(in: &subscriptions)
         
         //when
-        bookRepositoryMock.getBookDetail(id: "test")
+        bookRepositoryMock.getBookDetail(id: detail_result_empty)
                      
         wait(for: [expectation], timeout: 2)
               
